@@ -1,0 +1,116 @@
+/* Container Styles */
+.show-theatres-container {
+  padding: 20px;
+  max-width: 1200px;
+  margin: auto;
+}
+
+/* Form Styles */
+.date-form {
+  margin-bottom: 20px;
+  padding: 15px;
+  border-radius: 8px;
+  background-color: #f9f9f9;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.date-form h2 {
+  font-size: 1.8rem;
+  margin-bottom: 10px;
+  color: #333;
+}
+
+.date-form label {
+  font-size: 1.2rem;
+  color: #555;
+}
+
+.date-form input {
+  margin-top: 5px;
+  padding: 10px;
+  font-size: 1rem;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+/* Theatre Card Styles */
+.theatre-list {
+  list-style: none;
+  padding: 0;
+}
+
+.theatre-item {
+  display: flex;
+  align-items: center;
+  background-color: #fff;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  margin-bottom: 20px;
+  padding: 15px;
+  gap: 15px;
+}
+
+.theatre-item img {
+  width: 120px;
+  height: 180px;
+  object-fit: cover;
+  border-radius: 8px;
+}
+
+.theatre-item-content {
+  flex: 1;
+}
+
+.theatre-item h2 {
+  font-size: 1.5rem;
+  margin-bottom: 10px;
+  color: #333;
+}
+
+.theatre-item p {
+  font-size: 1rem;
+  color: #555;
+  margin: 5px 0;
+}
+
+.theatre-item button {
+  padding: 10px 15px;
+  background-color: #007bff;
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 1rem;
+  transition: background-color 0.3s;
+}
+
+.theatre-item button:hover {
+  background-color: #0056b3;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .date-form h2 {
+    font-size: 1.5rem;
+  }
+
+  .date-form input {
+    font-size: 0.9rem;
+  }
+
+  .theatre-item {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .theatre-item img {
+    width: 100%;
+    height: auto;
+  }
+
+  .theatre-item button {
+    width: 100%;
+  }
+}

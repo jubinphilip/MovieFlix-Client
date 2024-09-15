@@ -1,0 +1,157 @@
+/* Overlay styles to cover the entire viewport */
+.overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.8); /* Semi-transparent background */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000; /* Ensures it is above the Userhome content */
+  overflow: auto;
+}
+
+/* Movie info modal container */
+.movie-info-container {
+  background: #fff;
+  padding: 30px;
+  border-radius: 15px;
+  width: 90%;
+  max-width: 1200px;
+  max-height: 90%;
+  overflow-y: auto;
+  position: relative;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+/* Close icon styles */
+.close-icon {
+  position: absolute;
+  top: 15px;
+  right: 15px;
+  font-size: 2.5rem;
+  color: #f44336;
+  cursor: pointer;
+}
+
+/* Movie header (title, meta info, poster) */
+.movie-header {
+  display: flex;
+  gap: 30px;
+  align-items: flex-start;
+}
+
+.movie-poster {
+  width: 250px;
+  height: 350px;
+  object-fit: cover;
+  border-radius: 10px;
+  border: 2px solid #ddd;
+}
+
+.movie-meta {
+  flex: 1;
+}
+
+.movie-meta h1 {
+  margin-bottom: 20px;
+  font-size: 3rem;
+  color: #333;
+}
+
+.movie-meta p {
+  margin: 8px 0;
+  color: #666;
+  font-size: 1.2rem;
+}
+
+/* Cast & Crew section */
+.cast-info {
+  margin-top: 30px;
+}
+
+.cast-info h2 {
+  font-size: 2.5rem;
+  margin-bottom: 20px;
+  color: #333;
+}
+
+.cast-member {
+  display: flex;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.cast-member img {
+  width: 150px;
+  height: 150px;
+  object-fit: cover;
+  border-radius: 10px;
+  border: 2px solid #ddd;
+  margin-right: 20px;
+}
+
+.cast-member p {
+  margin: 0;
+  color: #333;
+  font-size: 1.2rem;
+}
+
+/* Book tickets button */
+.book-tickets-btn {
+  margin-top: 20px;
+  padding: 15px 25px;
+  background-color: #007bff;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 1.3rem;
+  transition: background-color 0.3s ease;
+  display: block;
+  width: 100%;
+}
+
+.book-tickets-btn:hover {
+  background-color: #0056b3;
+}
+
+/* Responsive styles */
+@media (max-width: 768px) {
+  .movie-info-container {
+    width: 95%;
+    padding: 20px;
+  }
+
+  .movie-header {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .movie-poster {
+    width: 100%;
+    height: auto;
+  }
+
+  .cast-member {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .cast-member img {
+    margin-bottom: 10px;
+  }
+}
+
+@media (max-width: 480px) {
+  .movie-meta h1 {
+    font-size: 2rem;
+  }
+
+  .book-tickets-btn {
+    font-size: 1.1rem;
+    padding: 12px 20px;
+  }
+}

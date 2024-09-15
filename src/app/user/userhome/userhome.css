@@ -1,0 +1,192 @@
+/* Container styling */
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
+  }
+  
+  /* Welcome user heading */
+  .welcome_user {
+    text-align: center;
+    font-size: 2rem;
+    margin-bottom: 30px;
+    color: #333;
+  }
+  
+  /* Now Running Movies Section */
+  .now-running_movies {
+    margin-bottom: 40px;
+  }
+  
+  .now_running_head {
+    font-size: 1.8rem;
+    margin-bottom: 15px;
+    color: #444;
+  }
+  
+  /* Search input styling */
+  input[name="search_movie"] {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 20px;
+    font-size: 1rem;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    box-sizing: border-box;
+  }
+  
+  /* Filters section */
+  .filters {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 20px;
+  }
+  
+  .filters select {
+    padding: 8px 12px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+    font-size: 1rem;
+  }
+  
+  .now_running_cards {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 20px;
+  }
+  
+  /* Now Running Movie Card */
+  .now_running_card {
+    background-color: #fff;
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    overflow: hidden;
+    transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+    cursor: pointer;
+  }
+  
+  .now_running_card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  }
+  
+  .movie_title {
+    font-size: 1.2rem;
+    text-align: center;
+    margin: 10px 0;
+  }
+  
+  .movie_image {
+    width: 100%;
+    height: 350px;
+    object-fit: cover;
+  }
+  
+  .now_running_card p {
+    text-align: center;
+    font-size: 1rem;
+    padding: 10px;
+    color: #555;
+  }
+  
+  /* Trending Movies Section */
+  .upcoming-movies {
+    margin-top: 50px;
+  }
+  
+  .upcoming-head {
+    font-size: 1.8rem;
+    margin-bottom: 15px;
+    color: #444;
+    text-align: center;
+  }
+  
+  .upcoming_cards {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 20px;
+  }
+  
+  .upcoming_card {
+    background-color: #fff;
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    overflow: hidden;
+    transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+    cursor: pointer;
+  }
+  
+  .upcoming_card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  }
+  
+  .upcoming_card img {
+    width: 100%;
+    height: 350px;
+    object-fit: cover;
+  }
+  
+  .upcoming_card h3 {
+    font-size: 1.2rem;
+    text-align: center;
+    margin: 10px 0;
+  }
+  
+  .upcoming_card p {
+    text-align: center;
+    font-size: 1rem;
+    padding: 10px;
+    color: #555;
+  }
+  
+  /* Responsive Design */
+  @media (max-width: 768px) {
+    .filters {
+      flex-direction: column;
+    }
+  
+    .filters select {
+      width: 100%;
+      margin-bottom: 10px;
+    }
+  
+    .now_running_card, .upcoming_card {
+      height: auto;
+    }
+  
+    .movie_image {
+      height: 250px;
+    }
+  
+    .upcoming_card img {
+      height: 250px;
+    }
+  }
+  
+  @media (max-width: 480px) {
+    .welcome_user {
+      font-size: 1.5rem;
+    }
+  
+    .now_running_head, .upcoming-head {
+      font-size: 1.5rem;
+    }
+  
+    input[name="search_movie"] {
+      font-size: 0.9rem;
+    }
+  
+    .movie_title, .upcoming_card h3 {
+      font-size: 1rem;
+    }
+  
+    .movie_image, .upcoming_card img {
+      height: 200px;
+    }
+  
+    .filters select {
+      font-size: 0.9rem;
+    }
+  }
+  

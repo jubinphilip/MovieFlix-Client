@@ -1,0 +1,84 @@
+/* Container Styles */
+.layout-container {
+    padding: 20px;
+    max-width: 1200px;
+    margin: auto;
+    text-align: center;
+  }
+  
+  /* Seating Layout Styles */
+  .seating-layout {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin: 20px 0;
+  }
+  
+  .seat-row {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 10px;
+  }
+  
+  .seat {
+    width: 30px;
+    height: 30px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 2px;
+    background-color: #e0e0e0;
+    border-radius: 4px;
+    cursor: pointer;
+  }
+  
+  .seat.selected {
+    background-color: #3399cc;
+    color: #fff;
+  }
+  
+  .seat.booked {
+    background-color: #f44336;
+    color: #fff;
+    cursor: not-allowed;
+  }
+  
+  button {
+    padding: 10px 20px;
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 1rem;
+    transition: background-color 0.3s;
+    margin: 10px 0;
+  }
+  
+  button:hover {
+    background-color: #0056b3;
+  }
+  
+  /* Responsive Design */
+  @media (max-width: 768px) {
+    .seating-layout {
+      overflow-x: auto; /* Allow horizontal scrolling */
+      white-space: nowrap; /* Prevent wrapping of seats */
+    }
+  
+    .seat-row {
+      display: inline-flex; /* Allow seats to be displayed in a single row */
+    }
+  
+    .seat {
+      width: 25px;
+      height: 25px;
+      font-size: 0.8rem;
+    }
+  
+    button {
+      width: 100%;
+      font-size: 1rem;
+    }
+  }
+  

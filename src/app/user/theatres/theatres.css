@@ -1,0 +1,96 @@
+/* theatres.css */
+
+/* Container for the entire component */
+.theatres-container {
+  padding: 20px;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background-color: #f9f9f9;
+}
+
+/* Heading styling */
+h1 {
+  text-align: center;
+  color: #333;
+  margin-bottom: 20px;
+}
+
+/* Search input styling */
+input[type="text"] {
+  width: 100%;
+  padding: 10px;
+  font-size: 1rem;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  margin-bottom: 20px;
+  box-sizing: border-box;
+}
+
+/* Styling for individual theatre items */
+.theatre-item {
+  border: 1px solid #ddd;
+  border-radius: 10px;
+  padding: 20px;
+  margin-bottom: 20px;
+  background-color: #fff;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.theatre-item h2 {
+  margin: 0;
+  font-size: 1.5rem;
+  color: #007bff;
+  text-align: center;
+}
+
+.theatre-item p {
+  margin: 10px 0;
+  font-size: 1rem;
+  color: #666;
+  text-align: center;
+}
+
+/* Movies list styling */
+.movies-list {
+  display: flex;
+  justify-content: center; /* Center align items horizontally */
+  flex-wrap: wrap;
+  gap: 15px;
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.movies-list li {
+  display: flex;
+  flex-direction: column; /* Stack image and text vertically */
+  align-items: center;
+  margin-bottom: 10px;
+  text-align: center;
+  width: 150px; /* Consistent width for each movie item */
+}
+
+.movies-list img {
+  border-radius: 8px;
+  width: 100%; /* Adjusts image to fill the container width */
+  height: 200px; /* Consistent height for each poster */
+  object-fit: cover; /* Ensures image covers the area without distortion */
+  margin-bottom: 5px;
+}
+
+/* Movie title styling */
+.movies-list p {
+  margin: 0;
+  font-size: 1rem;
+  color: #333;
+}
+
+/* Responsive styling */
+@media (max-width: 768px) {
+  .theatre-item {
+    padding: 15px;
+  }
+
+  .movies-list img {
+    height: 150px;
+  }
+}

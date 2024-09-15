@@ -1,0 +1,108 @@
+/* Home.css */
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap');
+
+body {
+  margin: 0;
+  padding: 0;
+  font-family: 'Poppins', sans-serif;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.container {
+  width: 100%;
+  max-width: 400px;
+  padding: 20px;
+}
+
+.main-content {
+  background-color: white;
+  border-radius: 10px;
+  padding: 40px;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+  text-align: center;
+}
+
+.title {
+  color: #333;
+  font-size: 28px;
+  font-weight: 600;
+  margin-bottom: 20px;
+}
+
+.description {
+  color: #666;
+  font-size: 16px;
+  margin-bottom: 30px;
+}
+
+.button-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 15px;
+}
+
+.button {
+  padding: 12px;
+  border-radius: 5px;
+  font-size: 16px;
+  font-weight: 500;
+  text-decoration: none;
+  text-align: center;
+  transition: transform 0.1s ease, background-color 0.3s ease;
+}
+
+.button:hover {
+  transform: translateY(-2px);
+}
+
+.button:active {
+  transform: translateY(0);
+}
+
+.primary {
+  background-color: #667eea;
+  color: white;
+}
+
+.primary:hover {
+  background-color: #5a6fd6;
+}
+
+.secondary {
+  background-color: #764ba2;
+  color: white;
+}
+
+.secondary:hover {
+  background-color: #693d91;
+}
+
+.outlined {
+  grid-column: 1 / -1;
+  background-color: transparent;
+  color: #667eea;
+  border: 2px solid #667eea;
+  margin-top: 10px;
+}
+
+.outlined:hover {
+  background-color: rgba(102, 126, 234, 0.1);
+}
+
+@media (max-width: 480px) {
+  .container {
+    padding: 10px;
+  }
+  
+  .main-content {
+    padding: 20px;
+  }
+  
+  .button-grid {
+    grid-template-columns: 1fr;
+  }
+}

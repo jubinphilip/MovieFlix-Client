@@ -1,0 +1,87 @@
+/* AdminLogin.css */
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap');
+
+body {
+  margin: 0;
+  padding: 0;
+  font-family: 'Poppins', sans-serif;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.admin-login-container {
+  width: 100%;
+  max-width: 400px;
+  padding: 20px;
+}
+
+.admin-login-form {
+  background-color: white;
+  border-radius: 10px;
+  padding: 40px;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+  text-align: center;
+}
+
+.admin-login-title {
+  color: #333;
+  font-size: 28px;
+  font-weight: 600;
+  margin-bottom: 10px;
+}
+
+.admin-login-subtitle {
+  color: #666;
+  font-size: 16px;
+  margin-bottom: 30px;
+}
+
+.admin-login-input {
+  width: 100%;
+  padding: 12px;
+  margin-bottom: 20px;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  font-size: 16px;
+  transition: border-color 0.3s ease;
+}
+
+.admin-login-input:focus {
+  outline: none;
+  border-color: #667eea;
+}
+
+.admin-login-button {
+  width: 100%;
+  padding: 12px;
+  background-color: #667eea;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  font-size: 16px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background-color 0.3s ease, transform 0.1s ease;
+}
+
+.admin-login-button:hover {
+  background-color: #5a6fd6;
+  transform: translateY(-2px);
+}
+
+.admin-login-button:active {
+  transform: translateY(0);
+}
+
+@media (max-width: 480px) {
+  .admin-login-container {
+    padding: 10px;
+  }
+  
+  .admin-login-form {
+    padding: 20px;
+  }
+}
