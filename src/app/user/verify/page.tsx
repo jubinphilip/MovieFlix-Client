@@ -2,7 +2,7 @@
 import React, { useState } from 'react'
 import axios from 'axios'
 import { useRouter } from 'next/navigation'
-import { Router } from 'next/router'
+
 function Verify() {
     const[otp,setOtp]=useState('')
     const router=useRouter()

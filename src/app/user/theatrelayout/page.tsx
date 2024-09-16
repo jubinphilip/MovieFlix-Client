@@ -111,8 +111,9 @@ function Layout() {
       }
       newSeatLayout.push(rowSeats)//push a row to the array
     }
-
+    console.log(seatLayout)
     setSeatLayout(newSeatLayout)//setting the layout
+    
   }
 //info needed for adding data  to the db
   const record = {
@@ -217,7 +218,7 @@ function Layout() {
   return (
     <div className="layout-container">
       {booking && <Success id={bookingId} show={true} />}
-      <button onClick={handleClick}>Show Layout</button>
+      {seatLayout.length==0 && <button onClick={handleClick}>Show Seats</button>}
       <p>Ticket Price: {ticketInfo?.theatre_id.ticketprice}</p>
       <div className="seating-layout">
         {/* mapping through seats */}
