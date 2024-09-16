@@ -2,12 +2,13 @@ import axios from 'axios';
 import React, { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { IoCloseCircleSharp } from 'react-icons/io5';
-import './styles//movieinfo.css'; 
+import styles from './styles/movieinfo.module.css'; // Import as module
 
 interface MovieDetailsProps {
   movieId: string | undefined | number;
   movieState: React.Dispatch<React.SetStateAction<boolean>>;
 }
+
 interface Movie {
   title: string;
   description: string;
@@ -25,44 +26,40 @@ interface Movie {
     production: string;
   };
 }
-//The information ragarding a movie is displayed here the movie id and status for displaying this component is passed as a prop
+
 function Movieinfo({ movieId, movieState }: MovieDetailsProps) {
 
   const [movieInfo, setMovieInfo] = useState<Movie>();
   const router = useRouter();
 
   useEffect(() => {
-    //getting movie details using the movieid
     const url = `http://localhost:9000/user/getmovieinfo/${movieId}`;
     axios.get(url).then((res) => {
       setMovieInfo(res.data);
     });
   }, [movieId]);
 
-  //routed to nextpage onclicking
   const handleBookTickets = () => {
     router.push(`/user/showtheatre/${movieId}`);
   };
 
-  //Closing the component
   const handleClose = () => {
     movieState(false);
   };
 
   return (
-    <div className="overlay">
-      <div className="movie-info-container">
-        <IoCloseCircleSharp className="close-icon" onClick={handleClose} />
-        {/* if movieinfo is present thenonly the component is displayed */}
+    <div className={styles.overlay}>
+      <div className={styles.movieInfoContainer}>
+        <IoCloseCircleSharp className={styles.closeIcon} onClick={handleClose} />
         {movieInfo && (
-          <div className="movie-details">
-            <div className="movie-header">
+          <div className={styles.movieDetails}>
+            <div className={styles.movieHeader}>
               <img
                 src={`http://localhost:9000/uploads/${movieInfo.poster}`}
                 alt={movieInfo.title}
-                className="movie-poster"
+                className={styles.moviePoster}
               />
-              <div className="movie-meta">
+              <div className={styles.movieMeta}>
                 <h1>{movieInfo.title}</h1>
                 <p>Language: {movieInfo.language}</p>
                 <p>Genre: {movieInfo.genre}</p>
@@ -71,15 +68,15 @@ function Movieinfo({ movieId, movieState }: MovieDetailsProps) {
               </div>
             </div>
             <h2>Cast & Crew</h2>
-            <div className="cast-info">
-              <div className="cast-member">
+            <div className={styles.castInfo}>
+              <div className={styles.castMember}>
                 <img
                   src={`http://localhost:9000/uploads/${movieInfo.cast.actor_image}`}
                   alt={movieInfo.cast.actor}
                 />
                 <p>Actor: {movieInfo.cast.actor}</p>
               </div>
-              <div className="cast-member">
+              <div className={styles.castMember}>
                 <img
                   src={`http://localhost:9000/uploads/${movieInfo.cast.actress_image}`}
                   alt={movieInfo.cast.actress}
@@ -89,7 +86,7 @@ function Movieinfo({ movieId, movieState }: MovieDetailsProps) {
               <p>Director: {movieInfo.cast.director}</p>
               <p>Production: {movieInfo.cast.production}</p>
             </div>
-            <button className="book-tickets-btn" onClick={handleBookTickets}>
+            <button className={styles.bookTicketsBtn} onClick={handleBookTickets}>
               Book Tickets
             </button>
           </div>

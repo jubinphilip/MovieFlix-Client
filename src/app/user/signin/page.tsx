@@ -5,7 +5,9 @@ import { useRouter } from 'next/navigation';
 import { GoogleLogin } from '@react-oauth/google';
 import { useDispatch } from 'react-redux';
 import { setUser } from '../Redux/Feautures/user/userslice';
-import styles from './signin.module.css'; // 
+import styles from './signin.module.css'; 
+import { ToastContainer,toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 type Data = {
   email: string;
@@ -23,32 +25,42 @@ function Signin() {
 
   const handleSubmit: React.FormEventHandler<HTMLFormElement> = (e) => {
     e.preventDefault();
-
+try{
     const url = 'http://localhost:9000/user/login';
     axios.post(url, data).then((res) => {
-      alert(res.data.message);
-      const token = res.data.token;
-      console.log(token);
-      if (res.data.status === 1) {
-        /* the contents are dispatched to redux for storing it in a global state */
-        dispatch(
-          setUser({
-            userid: res.data.data._id,
-            token: token,
-            name: res.data.data.username,
-            email: res.data.data.email,
-          })
-        );
-        console.log(res.data);
+      if(res.data.status===1)
+        {
+          toast.success(res.data.message)
+          const token = res.data.token;
+           /* the contents are dispatched to redux for storing it in a global state */
+          dispatch(
+            setUser({
+              userid: res.data.data._id,
+              token: token,
+              name: res.data.data.username,
+              email: res.data.data.email,
+            })
+          );
+          //console.log(res.data);
         //username is stored at session
         sessionStorage.setItem('username', res.data.data.username);
         router.push('/user/userhome');
-      }
+        }
+        else
+        {
+          toast.error(res.data.message);
+        }
     });
+  }
+  catch(err)
+  {
+    toast.error("An Unexpected error ocuured")
+  }
   };
 
   return (
     <div className={styles.container}>
+      <ToastContainer/>
     <div className={styles.signinContainer}>
       <h1 className={styles.signinTitle}>Sign In</h1>
       <form onSubmit={handleSubmit} className={styles.signinForm}>

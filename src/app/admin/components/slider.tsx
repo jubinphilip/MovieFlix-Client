@@ -11,9 +11,9 @@ type Slide = {
 };
 
 const slidesData: Slide[] = [
-    { id: 1, image: '/assets/Brahmastra.jpeg', title: 'Watch New Movies', description: 'With Exiting Offers.' },
+    { id: 1, image: '/assets/turbo.webp', title: 'Watch New Movies', description: 'With Exiting Offers.' },
     { id: 2, image: '/assets/junglee.webp', title: 'Junglee', description: '' },
-    { id: 3, image: '/assets/kingkong.jpg', title: 'KingKong', description: '' },
+    { id: 3, image: '/assets/armslide.jpg', title: 'ARM', description: '' },
     { id: 4, image: '/assets/vazha.jpg', title: 'Vazha', description: ''}
 ]
 const Slider: React.FC = () => {

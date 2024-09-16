@@ -1,4 +1,3 @@
-
 .overlay {
   position: fixed;
   top: 0;
@@ -13,8 +12,7 @@
   overflow: auto;
 }
 
-
-.movie-info-container {
+.movieInfoContainer {
   background: #fff;
   padding: 30px;
   border-radius: 15px;
@@ -26,8 +24,7 @@
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
 }
 
-
-.close-icon {
+.closeIcon {
   position: absolute;
   top: 15px;
   right: 15px;
@@ -36,14 +33,13 @@
   cursor: pointer;
 }
 
-
-.movie-header {
+.movieHeader {
   display: flex;
   gap: 30px;
   align-items: flex-start;
 }
 
-.movie-poster {
+.moviePoster {
   width: 250px;
   height: 350px;
   object-fit: cover;
@@ -51,40 +47,39 @@
   border: 2px solid #ddd;
 }
 
-.movie-meta {
+.movieMeta {
   flex: 1;
 }
 
-.movie-meta h1 {
+.movieMeta h1 {
   margin-bottom: 20px;
   font-size: 3rem;
   color: #333;
 }
 
-.movie-meta p {
+.movieMeta p {
   margin: 8px 0;
   color: #666;
   font-size: 1.2rem;
 }
 
-/* Cast & Crew section */
-.cast-info {
+.castInfo {
   margin-top: 30px;
 }
 
-.cast-info h2 {
+.castInfo h2 {
   font-size: 2.5rem;
   margin-bottom: 20px;
   color: #333;
 }
 
-.cast-member {
+.castMember {
   display: flex;
   align-items: center;
   margin-bottom: 20px;
 }
 
-.cast-member img {
+.castMember img {
   width: 150px;
   height: 150px;
   object-fit: cover;
@@ -93,14 +88,13 @@
   margin-right: 20px;
 }
 
-.cast-member p {
+.castMember p {
   margin: 0;
   color: #333;
   font-size: 1.2rem;
 }
 
-/* Book tickets button */
-.book-tickets-btn {
+.bookTicketsBtn {
   margin-top: 20px;
   padding: 15px 25px;
   background-color: #007bff;
@@ -114,43 +108,42 @@
   width: 100%;
 }
 
-.book-tickets-btn:hover {
+.bookTicketsBtn:hover {
   background-color: #0056b3;
 }
 
-/* Responsive styles */
 @media (max-width: 768px) {
-  .movie-info-container {
+  .movieInfoContainer {
     width: 95%;
     padding: 20px;
   }
 
-  .movie-header {
+  .movieHeader {
     flex-direction: column;
     align-items: center;
   }
 
-  .movie-poster {
+  .moviePoster {
     width: 100%;
     height: auto;
   }
 
-  .cast-member {
+  .castMember {
     flex-direction: column;
     align-items: center;
   }
 
-  .cast-member img {
+  .castMember img {
     margin-bottom: 10px;
   }
 }
 
 @media (max-width: 480px) {
-  .movie-meta h1 {
+  .movieMeta h1 {
     font-size: 2rem;
   }
 
-  .book-tickets-btn {
+  .bookTicketsBtn {
     font-size: 1.1rem;
     padding: 12px 20px;
   }

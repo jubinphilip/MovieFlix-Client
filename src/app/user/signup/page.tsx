@@ -3,10 +3,12 @@
 import { useState } from 'react';
 import axios from 'axios';
 import styles from './signup.module.css'; 
-
+import { ToastContainer,toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+import { useRouter } from 'next/navigation';
 function Signup() {
   const [data, setData] = useState({});
-
+  const router=useRouter()
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setData((prev) => ({ ...prev, [e.target.name]: e.target.value }));
   };
@@ -18,24 +20,27 @@ function Signup() {
     try {
       const res = await axios.post(url, data);
       console.log(res.data);  
-      alert('Registration successful!'); 
+      if(res.status==200)
+      {
+      toast.success('Registration successful!'); 
+      router.push('/user/signin')
+      }
+
     } catch (error) {
       if (axios.isAxiosError(error)) {
         if (error.response && error.response.status === 400) {
-          alert(`Registration failed: ${error.response.data.message}`);
+          toast.error(`Registration failed: ${error.response.data.message}`);
         } else if (error.request) {
-          alert('No response from the server.');
-        } else {
-          alert('An error occurred during registration.');
-        }
-      } else {
-        alert('An unexpected error occurred.');
+          toast.error('No response from the server.');
+        } 
       }
     }
   };
 
   return (
+
     <div className={styles.container}>
+      <ToastContainer/>
     <div className={styles.signupContainer}>
       <div className={styles.signupPaper}>
         <h2 className={styles.signupHeading}>Sign Up</h2>

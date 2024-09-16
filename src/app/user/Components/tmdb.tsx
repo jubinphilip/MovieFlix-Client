@@ -1,7 +1,8 @@
 import axios from 'axios';
 import React, { useEffect, useState } from 'react';
 import { IoCloseCircleSharp } from 'react-icons/io5';
-import './styles/tmdb.css'; 
+import styles from './styles/tmdb.module.css';
+
 
 interface MovieDetailsProps {
   movieId: string | undefined | number;
@@ -53,18 +54,18 @@ function TmdbMovie({ movieId, movieState }: MovieDetailsProps) {
   }, [movieId]);
 
   return (
-    <div className="overlay">
-      <div className="container">
-        <IoCloseCircleSharp onClick={handleClose} className="close-icon" />
-
+    <div className={styles.overlay}>
+      <div className={styles.container}>
+        <IoCloseCircleSharp onClick={handleClose} className={styles['close-icon']} />
+  
         {movieInfo && (
-          <div className="movie-info">
+          <div className={styles['movie-info']}>
             <img
               src={`https://image.tmdb.org/t/p/w500/${movieInfo.poster_path}`}
               alt="Movie Poster"
-              className="movie-poster"
+              className={styles['movie-poster']}
             />
-
+  
             <div>
               <h1>{movieInfo.original_title}</h1>
               <p>Language: {movieInfo.original_language}</p>
@@ -73,9 +74,9 @@ function TmdbMovie({ movieId, movieState }: MovieDetailsProps) {
               <p>Overview: {movieInfo.overview}</p>
               <p>Tagline: {movieInfo.tagline}</p>
               <p>Genre: {movieInfo.genres.length > 0 ? movieInfo.genres[0].name : 'N/A'}</p>
-
+  
               {movieInfo.production_companies.length > 0 && (
-                <div className="production-company">
+                <div className={styles['production-company']}>
                   <img
                     src={`https://image.tmdb.org/t/p/w500/${movieInfo.production_companies[0].logo_path}`}
                     alt={`${movieInfo.production_companies[0].name} logo`}
@@ -89,6 +90,6 @@ function TmdbMovie({ movieId, movieState }: MovieDetailsProps) {
       </div>
     </div>
   );
-}
+}  
 
 export default TmdbMovie;

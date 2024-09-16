@@ -7,6 +7,7 @@ import axios from 'axios'
 import './theatreLayout.css'
 import Success from '../Components/Success'
 import { useRouter } from 'next/navigation'
+import { toast } from 'react-toastify'
 
 interface Shows {
   _id: string,
@@ -73,7 +74,7 @@ function Layout() {
   //function for handling click in  a seat
   const handleSeatClicks = (seat: string) => {
     if (bookedSeats.includes(seat)) {
-      alert("Already booked")
+      toast.warn("Already booked")
       return
     } else {
       setSelectedSeats((prev) => {
@@ -174,7 +175,7 @@ function Layout() {
           });
 
           if (verify.data.state === true) {
-            console.log("Payment Success")
+          toast.success("Payment Success")
             const url = 'http://localhost:9000/user/booking'
             axios.post(url, record, {
               headers: {

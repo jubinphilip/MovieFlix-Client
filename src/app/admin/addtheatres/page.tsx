@@ -57,6 +57,7 @@ function Addtheatres() {
   const handleEdit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     const url = 'http://localhost:9000/admin/editmovies';
+    console.log(editData)
     await axios.post(url, editData, { headers: { 'Authorization': `Bearer ${token}` } });
   };
 //Function for adding the theatre
