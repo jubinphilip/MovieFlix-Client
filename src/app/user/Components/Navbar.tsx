@@ -15,6 +15,7 @@ function Navbar() {
   const handleLogout = () => {
     localStorage.clear();
     dispatch(resetTicketDetails());
+    sessionStorage.clear()
     dispatch(clearUser())
     router.push('/');
   };

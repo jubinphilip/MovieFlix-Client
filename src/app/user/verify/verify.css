@@ -11,7 +11,7 @@
   align-items: center;
 }
 
-.signinContainer {
+.verifyContainer {
   width: 100%;
   max-width: 400px;
   padding: 40px;
@@ -20,7 +20,7 @@
   box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
 }
 
-.signinTitle {
+.verifyTitle {
   color: #333;
   font-size: 28px;
   font-weight: 600;
@@ -28,12 +28,12 @@
   text-align: center;
 }
 
-.signinForm {
+.verifyForm {
   display: flex;
   flex-direction: column;
 }
 
-.signinInput {
+.verifyInput {
   margin-bottom: 20px;
   padding: 12px;
   border: 1px solid #ddd;
@@ -42,12 +42,12 @@
   transition: border-color 0.3s ease;
 }
 
-.signinInput:focus {
+.verifyInput:focus {
   outline: none;
   border-color: #667eea;
 }
 
-.signinButton {
+.verifyButton {
   background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
   color: white;
   border: none;
@@ -57,49 +57,18 @@
   font-weight: 500;
   cursor: pointer;
   transition: transform 0.1s ease;
-  margin-bottom: 20px;
 }
 
-.signinButton:hover {
+.verifyButton:hover {
   transform: translateY(-2px);
 }
 
-.signinButton:active {
-  transform: translateY(0);
-}
-
-.signinGoogle {
-  display: flex;
-  flex-direction: column; /* Stack buttons vertically */
-  align-items: center;
-  margin-top: 20px;
-}
-
-.signinGoogleButton {
-  background: linear-gradient(135deg, #2b8a3d 0%, #1e6f2c 100%);
-  color: white;
-  border: none;
-  padding: 12px;
-  border-radius: 5px;
-  font-size: 16px;
-  font-weight: 500;
-  cursor: pointer;
-  transition: transform 0.1s ease;
-  margin-top: 10px;
-  text-align: center;
-  width: 100%; /* Full width for the button */
-}
-
-.signinGoogleButton:hover {
-  transform: translateY(-2px);
-}
-
-.signinGoogleButton:active {
+.verifyButton:active {
   transform: translateY(0);
 }
 
 @media (max-width: 480px) {
-  .signinContainer {
+  .verifyContainer {
     padding: 20px;
   }
 }

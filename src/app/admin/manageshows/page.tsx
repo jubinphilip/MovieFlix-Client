@@ -91,13 +91,19 @@ catch(error)
     }));
 
     //Function for getting a specific theatre and its movies
+    try
+    {
     axios.get(`http://localhost:9000/admin/gettheatre/${theatre_id}`, {
       headers: { 'Authorization': `Bearer ${token}` }
     }).then((res) => {
       const { movie1, movie2, movie3 } = res.data;
       setMovies([movie1, movie2, movie3]);
     });
-  };
+}catch(error)
+{
+  console.log("Error Occured")
+}
+  }
 
   const handleChange = (e: ChangeEvent<HTMLSelectElement | HTMLInputElement>) => {
     setShowData((prev) => ({ ...prev, [e.target.name]: e.target.value }));
