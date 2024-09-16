@@ -2,6 +2,8 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import './addtheatres.css'; // Import the CSS file
+import { toast,ToastContainer} from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 type Movie = {
   _id: string;
@@ -27,15 +29,29 @@ function Addtheatres() {
     //Fetching already existing movies from the database
     const fetchMovies = async () => {
       const url = 'http://localhost:9000/admin/getmovies';
+      try
+      {
       const res = await axios.get(url, { headers: { 'Authorization': `Bearer ${token}` } });
       setMovies(res.data);
+      }
+      catch(error)
+      {
+        console.error(error);
+      }
     };
 
     //Fetching  thetares from database
     const fetchTheatres = async () => {
       const url2 = 'http://localhost:9000/admin/gettheatre';
+      try
+    {
       const res = await axios.get(url2, { headers: { 'Authorization': `Bearer ${token}` } });
       setTheatre(res.data);
+    }
+    catch(error)
+    {
+      console.log(error)
+    }
     };
     fetchMovies();
     fetchTheatres();
@@ -54,21 +70,54 @@ function Addtheatres() {
     setEditdata((prev) => ({ ...prev, [name]: value }));
   };
 //Function for editing currently running movies
-  const handleEdit = async (e: React.FormEvent<HTMLFormElement>) => {
+  const handleEdit =  (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     const url = 'http://localhost:9000/admin/editmovies';
     console.log(editData)
-    await axios.post(url, editData, { headers: { 'Authorization': `Bearer ${token}` } });
+    try{
+     axios.post(url, editData, { headers: { 'Authorization': `Bearer ${token}` } }).then((res)=>
+    {
+      if(res.status===200)
+      {
+        toast.success(res.data.message)
+      }
+      else{
+        toast.error(res.data.message)
+      }
+    });
+  }
+  catch(err)
+  {
+    toast.error("An Error Occured")
+  }
   };
 //Function for adding the theatre
   const handleSubmit: React.FormEventHandler<HTMLFormElement> = async (e) => {
     e.preventDefault();
     const url = 'http://localhost:9000/admin/addtheatre';
-    await axios.post(url, data, { headers: { 'Authorization': `Bearer ${token}` } });
+    try
+    {
+    await axios.post(url, data, { headers: { 'Authorization': `Bearer ${token}` } }).then((res)=>
+    {
+      if(res.status===200)
+      {
+        toast.success(res.data.message)
+      }
+      else
+      {
+        toast.error(res.data.error)
+      }
+    });
+  }
+  catch(err)
+  {
+    toast.error("An error Occured")
+  }
   };
 
   return (
     <div className="container">
+      <ToastContainer/>
       <div className="form-container">
         <form onSubmit={handleSubmit} className="theatre-form">
           <h1>Add Theatres</h1>

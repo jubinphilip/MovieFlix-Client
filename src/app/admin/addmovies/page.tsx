@@ -2,6 +2,8 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 import './addmovies.css'; 
+import { ToastContainer,toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 type Data = {
   title: string;
@@ -75,7 +77,14 @@ function Addmovies() {
           'Content-Type': 'multipart/form-data',
         },
       });
-      console.log(response.data);
+      if(response.status==200)
+      {
+        toast.success(response.data.message)
+      }
+      else
+      {
+        toast.error(response.data.message)
+      }
     } catch (error) {
       console.error('Error adding movie:', error);
     }

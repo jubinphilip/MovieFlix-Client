@@ -5,6 +5,7 @@ import { useRouter } from 'next/navigation';
 import axios from 'axios';
 import styles from './home.module.css'; 
 
+
 type Data = {
   email: string;
   password: string;
@@ -29,6 +30,10 @@ function Admin() {
         sessionStorage.setItem('adminToken', res.data.token);
         if (res.status === 200) {
           router.push('/admin/adminhome');
+        }
+        else
+        {
+
         }
       })
       .catch((error) => {

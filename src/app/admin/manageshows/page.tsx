@@ -3,6 +3,8 @@ import React, { useEffect, useState, ChangeEvent } from 'react';
 import { RiDeleteBin2Fill } from "react-icons/ri";
 import axios from 'axios';
 import './manageshow.css'; 
+import { toast,ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 type Movie = {
   _id: string;
@@ -47,22 +49,35 @@ function ManageShows() {
 
   //Function for fetching shows
   const fetchShows = () => {
+    try
+    {
     axios.get('http://localhost:9000/admin/getshows', {
       headers: { 'Authorization': `Bearer ${token}` }
     }).then((res) => {
       setShows(res.data);
     });
-  };
+}
+catch(error)
+{
+  console.error("an error occured")
+}
+};
 
   //Function for getting theatres
   useEffect(() => {
+  try{
     axios.get('http://localhost:9000/admin/gettheatre', {
       headers: { 'Authorization': `Bearer ${token}` }
     }).then((res) => {
       setTheatre(res.data);
     });
-
+  
     fetchShows();
+  }
+  catch(error)
+  {
+    console.log(error)
+  }
   }, [token]);
 
   const handleTheatreChange = (e: ChangeEvent<HTMLSelectElement>) => {
@@ -90,31 +105,51 @@ function ManageShows() {
 //Functon for adding shows
   const handleSubmit: React.FormEventHandler<HTMLFormElement> = (e) => {
     e.preventDefault();
+    try{
     axios.post('http://localhost:9000/admin/addshows', showData, {
       headers: { 'Authorization': `Bearer ${token}` }
     }).then((res) => {
-      console.log(res.data.message);
+      if(res.status==200)
+      {
+      toast.success(res.data.message)
       fetchShows();
+      }
+      else
+      {
+        toast.error(res.data.message)
+      }
     });
+  }catch(error)
+  {
+    toast.error("An error Occured")
+  }
   };
 
   //Function for deleting a particular show
   const deleteShow = (id: string) => {
     const url = `http://localhost:9000/admin/deleteshow/${id}`;
+    try{
     axios.delete(url, {
       headers: { 'Authorization': `Bearer ${token}` }
     }).then((res) => {
       if (res.status === 200) {
-        console.log(res.data);
+        toast.success(res.data.message)
         fetchShows();
       } else {
-        console.log("Deletion failed");
+        toast.error(res.data.message)
       }
     });
+  }
+  catch(error)
+  {
+    toast.error("Unexpected Error Occured")
+  }
   };
+
 
   return (
     <div className="manage-shows">
+      <ToastContainer/>
       <form onSubmit={handleSubmit} className="add-show-form">
         <h1>Add New Show</h1>
         <label>Select Theatre:</label>
