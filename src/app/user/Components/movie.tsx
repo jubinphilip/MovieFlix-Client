@@ -25,22 +25,26 @@ interface Movie {
     production: string;
   };
 }
-
+//The information ragarding a movie is displayed here the movie id and status for displaying this component is passed as a prop
 function Movieinfo({ movieId, movieState }: MovieDetailsProps) {
+
   const [movieInfo, setMovieInfo] = useState<Movie>();
   const router = useRouter();
 
   useEffect(() => {
+    //getting movie details using the movieid
     const url = `http://localhost:9000/user/getmovieinfo/${movieId}`;
     axios.get(url).then((res) => {
       setMovieInfo(res.data);
     });
   }, [movieId]);
 
+  //routed to nextpage onclicking
   const handleBookTickets = () => {
     router.push(`/user/showtheatre/${movieId}`);
   };
 
+  //Closing the component
   const handleClose = () => {
     movieState(false);
   };
@@ -49,6 +53,7 @@ function Movieinfo({ movieId, movieState }: MovieDetailsProps) {
     <div className="overlay">
       <div className="movie-info-container">
         <IoCloseCircleSharp className="close-icon" onClick={handleClose} />
+        {/* if movieinfo is present thenonly the component is displayed */}
         {movieInfo && (
           <div className="movie-details">
             <div className="movie-header">

@@ -2,7 +2,7 @@
 import React, { useEffect, useState, ChangeEvent } from 'react';
 import { RiDeleteBin2Fill } from "react-icons/ri";
 import axios from 'axios';
-import './manageshow.css'; // Import the CSS file
+import './manageshow.css'; 
 
 type Movie = {
   _id: string;
@@ -38,13 +38,14 @@ type Shows = {
 };
 
 function ManageShows() {
-  const timings = ['10.30', '1.00', '4.30', '7.30', '10.00'];
+  const timings = ['10.30', '1.00', '4.30', '7.30', '10.00'];//array which stores timings
   const [theatres, setTheatre] = useState<Theatre[]>([]);
   const [movies, setMovies] = useState<Movie[]>([]);
   const [showData, setShowData] = useState<ShowData>({} as ShowData);
   const [shows, setShows] = useState<Shows[]>([]);
   const token = sessionStorage.getItem('adminToken');
 
+  //Function for fetching shows
   const fetchShows = () => {
     axios.get('http://localhost:9000/admin/getshows', {
       headers: { 'Authorization': `Bearer ${token}` }
@@ -53,6 +54,7 @@ function ManageShows() {
     });
   };
 
+  //Function for getting theatres
   useEffect(() => {
     axios.get('http://localhost:9000/admin/gettheatre', {
       headers: { 'Authorization': `Bearer ${token}` }
@@ -73,6 +75,7 @@ function ManageShows() {
       seats: selectedTheatre ? parseInt(selectedTheatre.seats) : 0,
     }));
 
+    //Function for getting a specific theatre and its movies
     axios.get(`http://localhost:9000/admin/gettheatre/${theatre_id}`, {
       headers: { 'Authorization': `Bearer ${token}` }
     }).then((res) => {
@@ -84,7 +87,7 @@ function ManageShows() {
   const handleChange = (e: ChangeEvent<HTMLSelectElement | HTMLInputElement>) => {
     setShowData((prev) => ({ ...prev, [e.target.name]: e.target.value }));
   };
-
+//Functon for adding shows
   const handleSubmit: React.FormEventHandler<HTMLFormElement> = (e) => {
     e.preventDefault();
     axios.post('http://localhost:9000/admin/addshows', showData, {
@@ -95,6 +98,7 @@ function ManageShows() {
     });
   };
 
+  //Function for deleting a particular show
   const deleteShow = (id: string) => {
     const url = `http://localhost:9000/admin/deleteshow/${id}`;
     axios.delete(url, {
@@ -134,6 +138,8 @@ function ManageShows() {
         <label>Select Timing:</label>
         <select name="timing" onChange={handleChange}>
           <option value="" disabled>Select a timing</option>
+
+          {/* mapping through the array of timings and selects a timing for show */}
           {timings.map((timing, index) => (
             <option key={index} value={timing}>{timing}</option>
           ))}

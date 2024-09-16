@@ -5,7 +5,7 @@ import React, { useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { setTicketDetails } from '../../Redux/Feautures/user/ticketSlice';
 import { useRouter } from 'next/navigation';
-import './showtheatre.css'; // Import the CSS file
+import './showtheatre.css'; 
 
 interface BookTicketProps {
   params: { movieId: string }
@@ -35,17 +35,17 @@ interface Movie {
 }
 
 const ShowTheatres: React.FC<BookTicketProps> = ({ params }) => {
-  const { movieId } = params;
-  const [theatresWithMovies, setTheatresWithMovies] = useState<Movie[]>([]);
-  const [filteredMovies, setFilteredMovies] = useState<Movie[]>([]);
-  const [date, setDate] = useState<string>('');
+  const { movieId } = params;//Recieveing the movie id from params
+  const [theatresWithMovies, setTheatresWithMovies] = useState<Movie[]>([]);//State for getting theatres which run that movie
+  const [filteredMovies, setFilteredMovies] = useState<Movie[]>([]);//state for filtering movie with date
+  const [date, setDate] = useState<string>('');//stores date
   const router = useRouter();
   const dispatch = useDispatch();
 
   useEffect(() => {
     const fetchMovies = async () => {
       try {
-        const url = `http://localhost:9000/user/getshowtheatre/${movieId}`;
+        const url = `http://localhost:9000/user/getshowtheatre/${movieId}`;//gettinmg all show infromaton with the particular movie
         const response = await axios.get(url);
         setTheatresWithMovies(response.data);
       } catch (error) {
@@ -77,15 +77,17 @@ const ShowTheatres: React.FC<BookTicketProps> = ({ params }) => {
     e.preventDefault();
   };
 
+  //function for handling booking tickets before booking the user needs to select a date
   function handleClick(movieId: string, theatreId: string, timing: string, showId: string) {
     const currentDate = new Date();
     const selectedDate = new Date(date);
 
     if (!date) {
       alert("Please select a show date");
-    } else if (selectedDate < currentDate) {
+    } else if (selectedDate < currentDate) {//selected date needs to >= currrwnt date
       alert("Incorrect date. Please select a future date.");
     } else {
+      //All these informations are stored in the redux state and then is routed to next page
       dispatch(setTicketDetails({ movieId, theatreId, timing, showId, showdate: date }));
       router.push('/user/theatrelayout');
     }
@@ -100,7 +102,8 @@ const ShowTheatres: React.FC<BookTicketProps> = ({ params }) => {
       </form>
       <h1>Theatres</h1>
       <ul className="theatre-list">
-        {filteredMovies.map((movie) => (
+        {/* mapping through the movies */}
+        {filteredMovies.length>0?filteredMovies.map((movie) => (
           <li key={movie._id} className="theatre-item">
             <img src={`http://localhost:9000/uploads/${movie.movie_id.poster}`} alt={movie.movie_id.title} />
             <div className="theatre-item-content">
@@ -116,7 +119,7 @@ const ShowTheatres: React.FC<BookTicketProps> = ({ params }) => {
             </div>
             <button onClick={() => handleClick(movie.movie_id._id, movie.theatre_id._id, movie.timing, movie._id)}>Book Tickets</button>
           </li>
-        ))}
+        )):"No Movies Found"}
       </ul>
     </div>
   );

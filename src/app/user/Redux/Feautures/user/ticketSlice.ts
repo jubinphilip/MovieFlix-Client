@@ -1,4 +1,5 @@
 import { createSlice,PayloadAction } from "@reduxjs/toolkit";
+//slice is used for storing the movie booking information of a user
 interface TicketState{
     showId:string,
     movieId:string,
@@ -27,6 +28,7 @@ const ticketSlice=createSlice({
                 state. showdate=action.payload.showdate;
                 state.timing=action.payload.timing
             },
+            //Function for clearing the data
             resetTicketDetails:(state)=>{
                 state.showId=''
                 state.movieId='';

@@ -6,6 +6,7 @@ import Image from 'next/image'
 import axios from 'axios'
 import './theatreLayout.css'
 import Success from '../Components/Success'
+import { useRouter } from 'next/navigation'
 
 interface Shows {
   _id: string,
@@ -20,17 +21,18 @@ interface Shows {
 }
 
 function Layout() {
+  const router=useRouter()
   const ticketDetails = useSelector((state: RootState) => state.ticket)
   const userProfile = useSelector((state: RootState) => state.user)
-  const [seatInfo, setSeatInfo] = useState(0)
-  const [price, setPrice] = useState<number | null>(null)
-  const [ticketInfo, setTicketInfo] = useState<Shows | undefined>(undefined)
-  const [bookedSeats, setBookedSeats] = useState<string[]>([])
-  const [seatLayout, setSeatLayout] = useState<string[][]>([])
-  const [booking, setBooking] = useState(false)
-  const [selectedSeats, setSelectedSeats] = useState<string[]>([])
-  const [bookingId, setBookingId] = useState('')
-  const rowLetters = 'ABCDEFGHIJ'
+  const [seatInfo, setSeatInfo] = useState(0)//State for storing the number of seats available in the theatre
+  const [price, setPrice] = useState<number | null>(null)//state for storing the price of tickets on each seat selection the price will be incremented
+  const [ticketInfo, setTicketInfo] = useState<Shows | undefined>(undefined)//state for storing details regarding theatre and ticket price
+  const [bookedSeats, setBookedSeats] = useState<string[]>([])//state for storing the array of booked seats and from this array booked seats are marked
+  const [seatLayout, setSeatLayout] = useState<string[][]>([])//state for storing the layout of seats 
+  const [booking, setBooking] = useState(false)//storing the state for showing the success component on successfull payment
+  const [selectedSeats, setSelectedSeats] = useState<string[]>([])//storing the seatnames selected by the user
+  const [bookingId, setBookingId] = useState('')//Booking id if the current booking is set after a successfull payment and is passed to next component
+  const rowLetters = 'ABCDEFGHIJ'//aray of alphabets for displaying seats
 
   useEffect(() => {
     const url = `http://localhost:9000/user/getshow/${ticketDetails.showId}`
@@ -39,6 +41,7 @@ function Layout() {
       setSeatInfo(res.data.seats)
       setTicketInfo(res.data)
 
+      //recordseats is an object which stores the showid and date which is used to taked booked seats for that particular show at that date
       const recordSeats = {
         showid: ticketDetails.showId,
         date: ticketDetails.showdate,
@@ -46,11 +49,12 @@ function Layout() {
 
       const url = 'http://localhost:9000/user/getbookings';
       axios.get(url, { params: recordSeats }).then(res => {
-        setBookedSeats(res.data.bookedSeats)
+        setBookedSeats(res.data.bookedSeats)//getting booked seats
       })
     })
   }, [ticketDetails.showId])
 
+  //Razorpay element
   useEffect(() => {
     const script = document.createElement('script');
     script.src = 'https://checkout.razorpay.com/v1/checkout.js';
@@ -60,12 +64,13 @@ function Layout() {
 
   function handleClick() {
     console.log(seatInfo)
-    createLayout()
+    createLayout()//initializes the createlayout function for showing the seat layout of a theatre
     console.log("user", userProfile)
     console.log(ticketDetails)
     console.log(ticketInfo)
   }
 
+  //function for handling click in  a seat
   const handleSeatClicks = (seat: string) => {
     if (bookedSeats.includes(seat)) {
       alert("Already booked")
@@ -85,29 +90,30 @@ function Layout() {
             updatedSeats = prev;
           }
         }
-        // Recalculate the total price based on the updated seat selection
+        // Calculate the total price based on the updated seat selection
         setPrice(updatedSeats.length * Number(ticketInfo?.theatre_id.ticketprice));
         return updatedSeats;
       });
     }
   }
 
+  //Function for creating layout
   function createLayout() {
     const rows = 10
-    const columns = Math.ceil(Number(seatInfo) / rows)
-    const newSeatLayout: string[][] = []
+    const columns = Math.ceil(Number(seatInfo) / rows)//all seats are arranged in 10 rows
+    const newSeatLayout: string[][] = []//initialises a multidimesnsional array for storing the seatlayout
     for (let row = 0; row < rows; row++) {
-      const rowSeats: string[] = []
+      const rowSeats: string[] = []//array for storing seats in a row
       for (let col = 0; col < columns; col++) {
         const seatName = `${rowLetters[row]}${col + 1}`
-        rowSeats.push(seatName)
+        rowSeats.push(seatName)//pushing seats to the row
       }
-      newSeatLayout.push(rowSeats)
+      newSeatLayout.push(rowSeats)//push a row to the array
     }
 
-    setSeatLayout(newSeatLayout)
+    setSeatLayout(newSeatLayout)//setting the layout
   }
-
+//info needed for adding data  to the db
   const record = {
     showid: ticketDetails.showId,
     userid: userProfile.userid,
@@ -119,6 +125,11 @@ function Layout() {
   }
 
   const makePayment = async () => {
+    console.log(userProfile.token)
+    if(!userProfile.token)
+    {
+      router.push('/user/signin')
+    }
     console.log(ticketDetails.showdate)
 
     try {
@@ -127,7 +138,7 @@ function Layout() {
         currency: 'INR'
       };
 
-      // Make an API call to your backend to create the order
+      // Make an API call to your backend to create the movie booking
       const token = userProfile.token
       const url = "http://localhost:9000/user/payment";
       const response = await axios.post(url, content, {
@@ -172,9 +183,9 @@ function Layout() {
             }).then((res) => {
               if (res.status === 200) {
                 console.log(res.data.bookingId)
-                setBookingId(res.data.bookingId)
+                setBookingId(res.data.bookingId)//storing the currentbooking id
                 console.log(bookingId)
-                setBooking(true)
+                setBooking(true)//setting state of booking to true
               }
             })
           } else {
@@ -204,15 +215,18 @@ function Layout() {
 
   return (
     <div className="layout-container">
-      {booking && <Success id={bookingId} />}
+      {booking && <Success id={bookingId} show={true} />}
       <button onClick={handleClick}>Show Layout</button>
       <p>Ticket Price: {ticketInfo?.theatre_id.ticketprice}</p>
       <div className="seating-layout">
+        {/* mapping through seats */}
         {seatLayout.map((row, rowIndex) => (
           <div key={rowIndex} className="seat-row">
             {row.map((seat, seatIndex) => (
               <div
+
                 key={`${rowIndex}-${seatIndex}`}
+                //dynamically gives classaname for seats based on conditions
                 className={`seat ${selectedSeats.includes(seat) ? 'selected' : ''}${bookedSeats.includes(seat) ? 'booked' : ''}`}
                 onClick={() => handleSeatClicks(seat)}>
                 {seat}
@@ -223,8 +237,9 @@ function Layout() {
       </div>
       <div>
         <p>All eyes this way</p>
-        <Image src="/assets/movie.jpg" alt="" width={1000} height={100} />
+        <Image src="/assets/movie.jpg" alt="" width={1000} height={50} />
       </div>
+      {/* if selected seats length is greater than 0 then payment button is visible */}
       {selectedSeats.length > 0 && <button onClick={makePayment}>Pay {price}</button>}
     </div>
   )

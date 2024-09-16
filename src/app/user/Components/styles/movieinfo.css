@@ -1,19 +1,19 @@
-/* Overlay styles to cover the entire viewport */
+
 .overlay {
   position: fixed;
   top: 0;
   left: 0;
   width: 100%;
   height: 100%;
-  background: rgba(0, 0, 0, 0.8); /* Semi-transparent background */
+  background: rgba(0, 0, 0, 0.8); 
   display: flex;
   justify-content: center;
   align-items: center;
-  z-index: 1000; /* Ensures it is above the Userhome content */
+  z-index: 1000;
   overflow: auto;
 }
 
-/* Movie info modal container */
+
 .movie-info-container {
   background: #fff;
   padding: 30px;
@@ -26,7 +26,7 @@
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
 }
 
-/* Close icon styles */
+
 .close-icon {
   position: absolute;
   top: 15px;
@@ -36,7 +36,7 @@
   cursor: pointer;
 }
 
-/* Movie header (title, meta info, poster) */
+
 .movie-header {
   display: flex;
   gap: 30px;

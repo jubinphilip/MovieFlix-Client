@@ -1,5 +1,6 @@
 'use client';
 import { createSlice ,PayloadAction } from "@reduxjs/toolkit";
+//Slice for storing user information
 
 type userState={
     userid:string,
@@ -23,6 +24,7 @@ export const userSlice=createSlice({
             state.email=action.payload.email;
             state.token=action.payload.token
         },
+        //Clear user information
         clearUser:(state)=>{
             state.userid=""
             state.name="";

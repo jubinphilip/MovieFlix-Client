@@ -1,7 +1,7 @@
 'use client';
 import React, { useState } from 'react';
 import axios from 'axios';
-import './addmovies.css'; // Import the CSS file
+import './addmovies.css'; 
 
 type Data = {
   title: string;
@@ -17,7 +17,8 @@ type Data = {
 };
 
 function Addmovies() {
-  const [data, setData] = useState<Data>({} as Data);
+  const [data, setData] = useState<Data>({} as Data);//state for setting data
+  //3 states for storing 3 images
   const [image, setImage] = useState<File | null>(null);
   const [actorImage, setActorImage] = useState<File | null>(null);
   const [actressImage, setActressImage] = useState<File | null>(null);
@@ -25,7 +26,7 @@ function Addmovies() {
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setData((prev) => ({ ...prev, [e.target.name]: e.target.value }));
   };
-
+//Function for Setting uploaded image
   const handleFileChange = (
     e: React.ChangeEvent<HTMLInputElement>,
     imageSetter: React.Dispatch<React.SetStateAction<File | null>>
@@ -34,11 +35,13 @@ function Addmovies() {
       imageSetter(e.target.files[0]);
     }
   };
-
+//Submitting a=data
   const handleSubmit: React.FormEventHandler<HTMLFormElement> = async (e) => {
     e.preventDefault();
-
+//Storing the token in a session
     const token = sessionStorage.getItem('adminToken'); // Retrieve token from sessionStorage
+
+    //Uploading all coontents to formdata beacause for elements contain multipart data
 
     const formData = new FormData();
     formData.append('title', data.title);
@@ -66,6 +69,7 @@ function Addmovies() {
 
     try {
       const response = await axios.post(url, formData, {
+        //Bearer ${token} is a common format for OAuth 2.0 authentication. The Bearer keyword indicates that the token is being used for authorization, and ${token} is a placeholder for your actual token value.
         headers: {
           Authorization: `Bearer ${token}`,
           'Content-Type': 'multipart/form-data',

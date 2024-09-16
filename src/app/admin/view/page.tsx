@@ -1,7 +1,7 @@
 'use client';
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
-import './view.css'; // Import the CSS file
+import './view.css'; 
 
 type Movie = {
   _id: string;
@@ -16,6 +16,7 @@ function View() {
   const token = sessionStorage.getItem('adminToken');
 
   useEffect(() => {
+    //Function for getting all movies
     const fetchData = async () => {
       const url = 'http://localhost:9000/admin/getmovies';
       const res = await axios.get(url, { headers: { 'Authorization': `Bearer ${token}` } });

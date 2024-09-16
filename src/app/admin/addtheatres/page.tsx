@@ -21,41 +21,45 @@ function Addtheatres() {
   const [token, setToken] = useState('');
 
   useEffect(() => {
-    const token = sessionStorage.getItem('adminToken');
+    const token = sessionStorage.getItem('adminToken');//Taking token from sesssion
     setToken(token ? token : '');
     
+    //Fetching already existing movies from the database
     const fetchMovies = async () => {
       const url = 'http://localhost:9000/admin/getmovies';
       const res = await axios.get(url, { headers: { 'Authorization': `Bearer ${token}` } });
       setMovies(res.data);
     };
 
+    //Fetching  thetares from database
     const fetchTheatres = async () => {
       const url2 = 'http://localhost:9000/admin/gettheatre';
       const res = await axios.get(url2, { headers: { 'Authorization': `Bearer ${token}` } });
       setTheatre(res.data);
     };
-
     fetchMovies();
     fetchTheatres();
   }, []);
 
+ //Function for setting thetare values 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
     const { name, value } = e.target as HTMLInputElement | HTMLSelectElement;
     setData((prev) => ({ ...prev, [name]: value }));
   };
 
+  //Function for setting edited values
+
   const handleEditChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
     const { name, value } = e.target;
     setEditdata((prev) => ({ ...prev, [name]: value }));
   };
-
+//Function for editing currently running movies
   const handleEdit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     const url = 'http://localhost:9000/admin/editmovies';
     await axios.post(url, editData, { headers: { 'Authorization': `Bearer ${token}` } });
   };
-
+//Function for adding the theatre
   const handleSubmit: React.FormEventHandler<HTMLFormElement> = async (e) => {
     e.preventDefault();
     const url = 'http://localhost:9000/admin/addtheatre';
@@ -88,6 +92,7 @@ function Addtheatres() {
             <div className="select-group">
               <select name="movie1" onChange={handleChange}>
                 <option value="">Select a movie</option>
+                {/*Mapping through the movies array for displaying it in the dropdown */}
                 {movies.map((movie) => (
                   <option key={movie._id} value={movie._id}>{movie.title}</option>
                 ))}
@@ -115,6 +120,7 @@ function Addtheatres() {
             <label>Select Theatre:</label>
             <select name="theatrename" onChange={handleEditChange}>
               <option value="">Select a theatre</option>
+                  {/*Mapping through the theatres array for displaying it in the dropdown */}
               {theatres.map((theatre) => (
                 <option key={theatre._id} value={theatre.theatrename}>{theatre.theatrename}</option>
               ))}

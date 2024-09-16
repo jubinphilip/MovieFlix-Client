@@ -4,23 +4,26 @@ import { resetTicketDetails } from '../Redux/Feautures/user/ticketSlice';
 import{clearUser} from '../Redux/Feautures/user/userslice'
 
 import { useRouter } from 'next/navigation';
-import './styles/navbar.css'; // Link to the CSS file
-
+import { useSelector } from 'react-redux';
+import { RootState } from '../Redux/store';
+import './styles/navbar.css'; 
 function Navbar() {
   const router = useRouter();
   const dispatch = useDispatch();
 
+  //on clicking logout details regarding the user and his booking are all cleared from localstorage and redux
   const handleLogout = () => {
     localStorage.clear();
     dispatch(resetTicketDetails());
     dispatch(clearUser())
     router.push('/');
   };
-
+  const userProfile = useSelector((state: RootState) => state.user)
   return (
     <nav className="navbar">
       <div className="navbar-brand">
-        <h1>User Navbar</h1>
+        {/* if user is loginned then a name is stored in redux and it will be displayed and if no user is there then user is showed */}
+      <p>{userProfile?.name ? userProfile.name : "user"}</p>
       </div>
       <ul className="navbar-links">
         <li><a href="/user/userhome">Home</a></li>

@@ -5,7 +5,7 @@ import { useRouter } from 'next/navigation';
 import { GoogleLogin } from '@react-oauth/google';
 import { useDispatch } from 'react-redux';
 import { setUser } from '../Redux/Feautures/user/userslice';
-import './signin.css'; // Import the CSS file
+import styles from './signin.module.css'; // 
 
 type Data = {
   email: string;
@@ -23,56 +23,54 @@ function Signin() {
 
   const handleSubmit: React.FormEventHandler<HTMLFormElement> = (e) => {
     e.preventDefault();
-    console.log(data.email, data.password);
-    if (data.email === 'admin@gmail.com' && data.password === 'admin@123') {
-      router.push('/admin');
-    } else {
-      console.log(data);
-      const url = 'http://localhost:9000/user/login';
-      axios.post(url, data).then((res) => {
-        //console.log(res.data.message, res.data.status);
-        alert(res.data.message)
-        const token = res.data.token;
-        console.log(token);
-        if (res.data.status === 1) {
-          dispatch(
-            setUser({
-              userid: res.data.data._id,
-              token: token,
-              name: res.data.data.username,
-              email: res.data.data.email,
-            })
-          );
-          console.log(res.data);
-          sessionStorage.setItem('username', res.data.data.username);
-          router.push('/user/userhome');
-        }
-      });
-    }
+
+    const url = 'http://localhost:9000/user/login';
+    axios.post(url, data).then((res) => {
+      alert(res.data.message);
+      const token = res.data.token;
+      console.log(token);
+      if (res.data.status === 1) {
+        /* the contents are dispatched to redux for storing it in a global state */
+        dispatch(
+          setUser({
+            userid: res.data.data._id,
+            token: token,
+            name: res.data.data.username,
+            email: res.data.data.email,
+          })
+        );
+        console.log(res.data);
+        //username is stored at session
+        sessionStorage.setItem('username', res.data.data.username);
+        router.push('/user/userhome');
+      }
+    });
   };
 
   return (
-    <div className="signin-container">
-      <h1 className="signin-title">Sign In</h1>
-      <form onSubmit={handleSubmit} className="signin-form">
+    <div className={styles.container}>
+    <div className={styles.signinContainer}>
+      <h1 className={styles.signinTitle}>Sign In</h1>
+      <form onSubmit={handleSubmit} className={styles.signinForm}>
         <input
           type="email"
           name="email"
           placeholder="Enter your email"
           onChange={handleChange}
-          className="signin-input"
+          className={styles.signinInput}
         />
         <input
           type="password"
           name="password"
           placeholder="Enter your password"
           onChange={handleChange}
-          className="signin-input"
+          className={styles.signinInput}
         />
-        <button type="submit" className="signin-button">
+        <button type="submit" className={styles.signinButton}>
           Sign In
         </button>
-        <div className="signin-google">
+        <div className={styles.signinGoogle}>
+          {/* if the user logs in with google a credential is recieved as response and then it is send to server at server it is decoded and if the user is verififed then an otp is generated to his email */}
           <GoogleLogin
             onSuccess={(credentialResponse) => {
               console.log(credentialResponse.credential);
@@ -94,8 +92,10 @@ function Signin() {
               console.log('Login Failed');
             }}
           />
+          <br/><button  className={styles.signinButton}><a href="/user/userhome">Continue without login</a></button>
         </div>
       </form>
+    </div>
     </div>
   );
 }

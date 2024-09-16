@@ -1,6 +1,7 @@
 import axios from 'axios';
 import React, { useEffect, useState } from 'react';
 import { IoCloseCircleSharp } from 'react-icons/io5';
+import './styles/tmdb.css'; 
 
 interface MovieDetailsProps {
   movieId: string | undefined | number;
@@ -9,27 +10,29 @@ interface MovieDetailsProps {
 
 interface MovieInfo {
   poster_path: string;
-  original_title:string,
-  original_language:string,
-  release_date:string,
-  runtime:string,
-  tagline:string,
-  overview:string,
-  genres: genres[],
-  production_companies:production[]
-  }
-  interface genres {
-    name: string;
-  }
-  interface production{
-    logo_path:string,
-    name:string
-  }
+  original_title: string;
+  original_language: string;
+  release_date: string;
+  runtime: string;
+  tagline: string;
+  overview: string;
+  genres: genres[];
+  production_companies: production[];
+}
+
+interface genres {
+  name: string;
+}
+
+interface production {
+  logo_path: string;
+  name: string;
+}
+
 function TmdbMovie({ movieId, movieState }: MovieDetailsProps) {
   const [movieInfo, setMovieInfo] = useState<MovieInfo | undefined>(undefined);
 
   const handleClose = () => {
-    console.log("clicked");
     movieState(false);
   };
 
@@ -50,30 +53,41 @@ function TmdbMovie({ movieId, movieState }: MovieDetailsProps) {
   }, [movieId]);
 
   return (
-    <div>
-      <IoCloseCircleSharp onClick={handleClose} />
-      
+    <div className="overlay">
+      <div className="container">
+        <IoCloseCircleSharp onClick={handleClose} className="close-icon" />
 
-      {movieInfo && (
-        <div>
-        <img 
-          src={`https://image.tmdb.org/t/p/w500/${movieInfo.poster_path}`} 
-          alt="Movie Poster" 
-        />
-        
-        <h1>{movieInfo.original_title}</h1>
-        <p>Language:{movieInfo.original_language}</p>
-        <p>Release-date:{movieInfo.release_date}</p>
-        <p>Duration:{movieInfo.runtime}</p>
-        <p>overview:{movieInfo.overview}</p>
-        <p>Tagline:{movieInfo.tagline}</p>
-       <p> genre: {movieInfo.genres.length > 0 ? movieInfo.genres[0].name : 'N/A'}</p>
-       <img src={`https://image.tmdb.org/t/p/w500/${movieInfo.production_companies[0].logo_path}`} alt="" />
-       <p>Production:{movieInfo.production_companies[0].name}</p>
-    
-    </div>
-      ) }
+        {movieInfo && (
+          <div className="movie-info">
+            <img
+              src={`https://image.tmdb.org/t/p/w500/${movieInfo.poster_path}`}
+              alt="Movie Poster"
+              className="movie-poster"
+            />
+
+            <div>
+              <h1>{movieInfo.original_title}</h1>
+              <p>Language: {movieInfo.original_language}</p>
+              <p>Release date: {movieInfo.release_date}</p>
+              <p>Duration: {movieInfo.runtime} mins</p>
+              <p>Overview: {movieInfo.overview}</p>
+              <p>Tagline: {movieInfo.tagline}</p>
+              <p>Genre: {movieInfo.genres.length > 0 ? movieInfo.genres[0].name : 'N/A'}</p>
+
+              {movieInfo.production_companies.length > 0 && (
+                <div className="production-company">
+                  <img
+                    src={`https://image.tmdb.org/t/p/w500/${movieInfo.production_companies[0].logo_path}`}
+                    alt={`${movieInfo.production_companies[0].name} logo`}
+                  />
+                  <p>Production: {movieInfo.production_companies[0].name}</p>
+                </div>
+              )}
+            </div>
+          </div>
+        )}
       </div>
+    </div>
   );
 }
 

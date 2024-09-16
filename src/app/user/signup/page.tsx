@@ -2,7 +2,7 @@
 
 import { useState } from 'react';
 import axios from 'axios';
-import './signup.css'; // Import the CSS file
+import styles from './signup.module.css'; 
 
 function Signup() {
   const [data, setData] = useState({});
@@ -35,11 +35,12 @@ function Signup() {
   };
 
   return (
-    <div className="signup-container">
-      <div className="signup-paper">
-        <h2 className="signup-heading">Sign Up</h2>
-        <form onSubmit={handleSubmit} className="signup-form">
-          <div className="signup-input-group">
+    <div className={styles.container}>
+    <div className={styles.signupContainer}>
+      <div className={styles.signupPaper}>
+        <h2 className={styles.signupHeading}>Sign Up</h2>
+        <form onSubmit={handleSubmit} className={styles.signupForm}>
+          <div className={styles.signupInputGroup}>
             <label htmlFor="username">Username</label>
             <input
               type="text"
@@ -49,7 +50,7 @@ function Signup() {
               onChange={handleChange}
             />
           </div>
-          <div className="signup-input-group">
+          <div className={styles.signupInputGroup}>
             <label htmlFor="email">Email</label>
             <input
               type="email"
@@ -59,7 +60,7 @@ function Signup() {
               onChange={handleChange}
             />
           </div>
-          <div className="signup-input-group">
+          <div className={styles.signupInputGroup}>
             <label htmlFor="phone">Phone</label>
             <input
               type="text"
@@ -69,7 +70,7 @@ function Signup() {
               onChange={handleChange}
             />
           </div>
-          <div className="signup-input-group">
+          <div className={styles.signupInputGroup}>
             <label htmlFor="password">Password</label>
             <input
               type="password"
@@ -79,11 +80,12 @@ function Signup() {
               onChange={handleChange}
             />
           </div>
-          <button type="submit" className="signup-button">
+          <button type="submit" className={styles.signupButton}>
             Sign Up
           </button>
         </form>
       </div>
+    </div>
     </div>
   );
 }

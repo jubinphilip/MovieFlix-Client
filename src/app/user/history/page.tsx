@@ -26,14 +26,14 @@ interface History {
     timing: string;
   }
 }
-
+//This page loads the history of ticket bookings by the user
 function History() {
   const userProfile = useSelector((state: RootState) => state.user)
   const [history, setHistory] = useState<History[]>([])
   const token = userProfile.token
 
   useEffect(() => {
-    const userid = userProfile.userid
+    const userid = userProfile.userid//taking userid from redux
     const url = 'http://localhost:9000/user/gethistory'
     axios.get(url, { params: { userid }, headers: { 'Authorization': `Bearer ${token}` } })
       .then(res => {
@@ -48,6 +48,7 @@ function History() {
   return (
     <div className="history-container">
       <h1>Booking History</h1>
+      {/* mapping through the history array */}
       {history.map((item) => (
         <div key={item._id} className="history-item">
           <img className="movie_image" src={`http://localhost:9000/uploads/${item.movieid.poster}`} alt={item.movieid.title} />

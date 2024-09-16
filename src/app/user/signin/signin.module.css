@@ -1,7 +1,6 @@
-/* Signup.css */
 @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap');
 
-body {
+.container{
   margin: 0;
   padding: 0;
   font-family: 'Poppins', sans-serif;
@@ -11,21 +10,16 @@ body {
   justify-content: center;
   align-items: center;
 }
-
-.signup-container {
+.signinContainer {
   width: 100%;
   max-width: 400px;
-  padding: 20px;
-}
-
-.signup-paper {
+  padding: 40px;
   background-color: white;
   border-radius: 10px;
-  padding: 40px;
   box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
 }
 
-.signup-heading {
+.signinTitle {
   color: #333;
   font-size: 28px;
   font-weight: 600;
@@ -33,37 +27,26 @@ body {
   text-align: center;
 }
 
-.signup-form {
+.signinForm {
   display: flex;
   flex-direction: column;
 }
 
-.signup-input-group {
+.signinInput {
   margin-bottom: 20px;
-}
-
-.signup-input-group label {
-  display: block;
-  margin-bottom: 5px;
-  color: #555;
-  font-weight: 500;
-}
-
-.signup-input-group input {
-  width: 100%;
-  padding: 10px;
+  padding: 12px;
   border: 1px solid #ddd;
   border-radius: 5px;
   font-size: 16px;
   transition: border-color 0.3s ease;
 }
 
-.signup-input-group input:focus {
+.signinInput:focus {
   outline: none;
   border-color: #667eea;
 }
 
-.signup-button {
+.signinButton {
   background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
   color: white;
   border: none;
@@ -73,22 +56,25 @@ body {
   font-weight: 500;
   cursor: pointer;
   transition: transform 0.1s ease;
+  margin-bottom: 20px;
 }
 
-.signup-button:hover {
+.signinButton:hover {
   transform: translateY(-2px);
 }
 
-.signup-button:active {
+.signinButton:active {
   transform: translateY(0);
 }
 
+.signinGoogle {
+  display: flex;
+  justify-content: center;
+  margin-top: 20px;
+}
+
 @media (max-width: 480px) {
-  .signup-container {
-    padding: 10px;
-  }
-  
-  .signup-paper {
+  .signinContainer {
     padding: 20px;
   }
 }
