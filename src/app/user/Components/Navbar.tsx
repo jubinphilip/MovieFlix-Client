@@ -12,7 +12,7 @@ function Navbar() {
   const router = useRouter();
   const dispatch = useDispatch();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
-
+//when pressing logout redux session and localsorage needs to be cleared
   const handleLogout = () => {
     localStorage.clear();
     dispatch(resetTicketDetails());
@@ -40,7 +40,7 @@ function Navbar() {
           <li><button className="logout-btn" onClick={handleLogout}>Logout</button></li>
         </ul>
       </nav>
-      
+      {/* Navbar for Mobile device */}
       <nav className="mobile-nav">
         <div className="mobile-nav-header">
           <div className="navbar-brand">
