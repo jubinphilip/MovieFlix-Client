@@ -5,6 +5,7 @@ import axios from 'axios';
 import './manageshow.css'; 
 import { toast,ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import { fetchImages, fetchTheatres } from '@/app/services/services';
 
 type Movie = {
   _id: string;
@@ -66,12 +67,13 @@ catch(error)
   //Function for getting theatres
   useEffect(() => {
   try{
-    axios.get('http://localhost:9000/admin/gettheatre', {
-      headers: { 'Authorization': `Bearer ${token}` }
-    }).then((res) => {
-      setTheatre(res.data);
-    });
-  
+    const getTheatres=async()=>
+    {
+
+    const res=await fetchTheatres()
+      setTheatre(res);
+    }
+  getTheatres()
     fetchShows();
   }
   catch(error)
@@ -203,7 +205,7 @@ catch(error)
               {show.movie_id && show.movie_id.title ? (
                 <div className="show-details">
                   <img
-                    src={`http://localhost:9000/uploads/${show.movie_id.poster}`}
+                    src={fetchImages(show.movie_id.poster)}
                     alt={show.movie_id.title}
                     className="show-poster"
                   />

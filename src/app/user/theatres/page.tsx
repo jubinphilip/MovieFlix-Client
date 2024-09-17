@@ -4,6 +4,7 @@ import axios from 'axios'
 import React, { useEffect, useState } from 'react'
 import { useRouter } from 'next/navigation'
 import './theatres.css'
+import { fetchImages, fetchTheatres } from '@/app/services/services'
 
 interface Movie {
   _id: string;
@@ -29,17 +30,19 @@ function Theatres() {
   const [loading, setLoading] = useState(true);  // Add loading state
   const router=useRouter()
   useEffect(() => {
-    const url = 'http://localhost:9000/user/gettheatres';
-    axios.get(url)
-      .then((res) => {
-        setTheatres(res.data);
-        setLoading(false);  // Set loading to false when data is ready
-      })
-      .catch((error) => {
-        console.error("Error fetching data: ", error);
-        setLoading(false);  // Stop loading on error too
-      });
-  }, []);
+    const fetchTheatreList = async () => {
+      try{
+ const data=await fetchTheatres()
+      setTheatres(data);
+      setLoading(false);  // Set loading to false when data is ready
+    }
+    catch(error) {
+      console.error("Error fetching data: ", error);
+      setLoading(false);  // Stop loading on error too
+    }
+  }
+  fetchTheatreList();
+}, []);
   const handleClick = (id:string) => {
     router.push(`/user/showtheatre/${id}`);
   };
@@ -72,7 +75,7 @@ function Theatres() {
                 {theatre.movies.movie1 && (
                   <li>
                     <img 
-                      src={`http://localhost:9000/uploads/${theatre.movies.movie1?.poster}`} 
+                      src={fetchImages(theatre.movies.movie1?.poster)} 
                       alt={theatre.movies.movie1?.title} 
                       onClick={()=>handleClick(theatre.movies.movie1?._id)}
                     />
@@ -82,7 +85,7 @@ function Theatres() {
                 {theatre.movies.movie2 && (
                   <li>
                     <img 
-                      src={`http://localhost:9000/uploads/${theatre.movies.movie2?.poster}`} 
+                      src={fetchImages(theatre.movies.movie2?.poster)} 
                       alt={theatre.movies.movie2?.title} 
                       onClick={()=>handleClick(theatre.movies.movie2?._id)}
                     />
@@ -92,7 +95,7 @@ function Theatres() {
                 {theatre.movies.movie3 && (
                   <li>
                     <img 
-                      src={`http://localhost:9000/uploads/${theatre.movies.movie3?.poster}`} 
+                      src={fetchImages(theatre.movies.movie3?.poster)} 
                       alt={theatre.movies.movie3?.title} 
                       onClick={()=>handleClick(theatre.movies.movie3?._id)}
                     />

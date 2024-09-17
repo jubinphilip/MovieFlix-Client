@@ -1,7 +1,7 @@
 'use client';
 import React, { useEffect, useState } from 'react';
-import axios from 'axios';
 import './view.css'; 
+import { fetchImages, fetchLocalMovies } from '@/app/services/services';
 
 type Movie = {
   _id: string;
@@ -18,9 +18,9 @@ function View() {
   useEffect(() => {
     //Function for getting all movies
     const fetchData = async () => {
-      const url = 'http://localhost:9000/admin/getmovies';
-      const res = await axios.get(url, { headers: { 'Authorization': `Bearer ${token}` } });
-      setData(res.data);
+     
+      const res = await fetchLocalMovies('admin')
+      setData(res);
     };
 
     fetchData();
@@ -32,7 +32,8 @@ function View() {
       <div className="movie-grid">
         {data.map((item) => (
           <div key={item._id} className="movie-card">
-            <img src={`http://localhost:9000/uploads/${item.poster}`} alt={item.title} className="movie-poster" />
+            {/* getting images using the fetchImage api */}
+            <img src={fetchImages(item.poster)} alt={item.title} className="movie-poster" />
             <div className="movie-details">
               <h2 className="movie-title">{item.title}</h2>
               <p className="movie-description">{item.description}</p>

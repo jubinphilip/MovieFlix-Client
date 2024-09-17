@@ -51,13 +51,14 @@ function handleClose()
       {status && <div className="success-modal">
         <IoIosCloseCircle onClick={handleClose}/>
         <h1>Booking Successful</h1>
-        <p><strong>Booking ID:</strong> {id}</p>
+       {/*  <p><strong>Booking ID:</strong> {id}</p> */}
         {/* showing the qr code url on screen on a button click and on successfull qr code generation the text is changed */}
         <button onClick={handleClick}>{text}</button>
         {qrCodeUrl && (
           <div>
             <h2>Your QR Code:</h2>
             <img src={qrCodeUrl} alt="QR Code" />
+            <button><a href="/user/userhome">Book Again</a></button>
           </div>
         )}
       </div>}

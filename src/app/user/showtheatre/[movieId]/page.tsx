@@ -6,6 +6,7 @@ import { useDispatch } from 'react-redux';
 import { setTicketDetails } from '../../Redux/Feautures/user/ticketSlice';
 import { useRouter } from 'next/navigation';
 import './showtheatre.css'; 
+import { fetchImages } from '@/app/services/services';
 
 interface BookTicketProps {
   params: { movieId: string }
@@ -105,7 +106,7 @@ const ShowTheatres: React.FC<BookTicketProps> = ({ params }) => {
         {/* mapping through the movies */}
         {filteredMovies.length>0?filteredMovies.map((movie) => (
           <li key={movie._id} className="theatre-item">
-            <img src={`http://localhost:9000/uploads/${movie.movie_id.poster}`} alt={movie.movie_id.title} />
+            <img src={fetchImages(movie.movie_id.poster)} alt={movie.movie_id.title} />
             <div className="theatre-item-content">
               <h2>{movie.movie_id.title}</h2>
               <p><strong>Language:</strong> {movie.movie_id.language}</p>

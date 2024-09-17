@@ -3,6 +3,7 @@ import React, { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { IoCloseCircleSharp } from 'react-icons/io5';
 import styles from './styles/movieinfo.module.css'; // Import as module
+import { fetchImages } from '@/app/services/services';
 
 interface MovieDetailsProps {
   movieId: string | undefined | number;
@@ -55,7 +56,7 @@ function Movieinfo({ movieId, movieState }: MovieDetailsProps) {
           <div className={styles.movieDetails}>
             <div className={styles.movieHeader}>
               <img
-                src={`http://localhost:9000/uploads/${movieInfo.poster}`}
+                src={fetchImages(movieInfo.poster)}
                 alt={movieInfo.title}
                 className={styles.moviePoster}
               />

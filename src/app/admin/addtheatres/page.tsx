@@ -4,6 +4,7 @@ import axios from 'axios';
 import './addtheatres.css'; // Import the CSS file
 import { toast,ToastContainer} from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import { fetchLocalMovies, fetchTheatres } from '@/app/services/services';
 
 type Movie = {
   _id: string;
@@ -28,11 +29,11 @@ function Addtheatres() {
     
     //Fetching already existing movies from the database
     const fetchMovies = async () => {
-      const url = 'http://localhost:9000/admin/getmovies';
       try
       {
-      const res = await axios.get(url, { headers: { 'Authorization': `Bearer ${token}` } });
-      setMovies(res.data);
+      const res = await fetchLocalMovies('admin')
+      console.group("Localmovies",res)
+      setMovies(res);
       }
       catch(error)
       {
@@ -41,12 +42,11 @@ function Addtheatres() {
     };
 
     //Fetching  thetares from database
-    const fetchTheatres = async () => {
-      const url2 = 'http://localhost:9000/admin/gettheatre';
+    const getTheatres = async () => {
       try
     {
-      const res = await axios.get(url2, { headers: { 'Authorization': `Bearer ${token}` } });
-      setTheatre(res.data);
+      const res = await fetchTheatres()
+     setTheatre(res);
     }
     catch(error)
     {
@@ -54,7 +54,7 @@ function Addtheatres() {
     }
     };
     fetchMovies();
-    fetchTheatres();
+    getTheatres();
   }, []);
 
  //Function for setting thetare values 
@@ -143,19 +143,19 @@ function Addtheatres() {
               <select name="movie1" onChange={handleChange}>
                 <option value="">Select a movie</option>
                 {/*Mapping through the movies array for displaying it in the dropdown */}
-                {movies.map((movie) => (
+                {movies && movies.map((movie) => (
                   <option key={movie._id} value={movie._id}>{movie.title}</option>
                 ))}
               </select>
               <select name="movie2" onChange={handleChange}>
                 <option value="">Select a movie</option>
-                {movies.map((movie) => (
+                {movies && movies.map((movie) => (
                   <option key={movie._id} value={movie._id}>{movie.title}</option>
                 ))}
               </select>
               <select name="movie3" onChange={handleChange}>
                 <option value="">Select a movie</option>
-                {movies.map((movie) => (
+                {movies && movies.map((movie) => (
                   <option key={movie._id} value={movie._id}>{movie.title}</option>
                 ))}
               </select>
@@ -181,19 +181,19 @@ function Addtheatres() {
             <div className="select-group">
               <select name="movie1" onChange={handleEditChange}>
                 <option value="">Select a movie</option>
-                {movies.map((movie) => (
+                {movies && movies.map((movie) => (
                   <option key={movie._id} value={movie._id}>{movie.title}</option>
                 ))}
               </select>
               <select name="movie2" onChange={handleEditChange}>
                 <option value="">Select a movie</option>
-                {movies.map((movie) => (
+                {movies && movies.map((movie) => (
                   <option key={movie._id} value={movie._id}>{movie.title}</option>
                 ))}
               </select>
               <select name="movie3" onChange={handleEditChange}>
                 <option value="">Select a movie</option>
-                {movies.map((movie) => (
+                {movies && movies.map((movie) => (
                   <option key={movie._id} value={movie._id}>{movie.title}</option>
                 ))}
               </select>

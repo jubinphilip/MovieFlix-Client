@@ -4,7 +4,7 @@ import './userhome.css';
 import Movieinfo from '../Components/movie';
 import TmdbMovie from '../Components/tmdb';
 import Slider from '../../admin/components/slider';
-import { fetchLocalMovies, fetchUpcomingMovies } from '../../services/services'; // Import the API call functions
+import { fetchImages, fetchLocalMovies, fetchUpcomingMovies } from '../../services/services'; // Import the API call functions
 
 type Movies = {
   _id: string;
@@ -36,7 +36,7 @@ function Userhome() {
     const fetchData = async () => {
       try {
 
-        const localMovies = await fetchLocalMovies();//Fetch movies stored in the db
+        const localMovies = await fetchLocalMovies('user');//Fetch movies stored in the db
         setMovies(localMovies);
 
         // Fetch upcoming movies from TMDB API function returns movies from tmdb api
@@ -111,7 +111,7 @@ function Userhome() {
             {filteredMovies.map((item) => (
               <div key={item._id} className="now_running_card" onClick={() => handleMovieClick(item._id)}>
                 <h3 className="movie_title">{item.title}</h3>
-                <img className="movie_image" src={`http://localhost:9000/uploads/${item.poster}`} alt={item.title} />
+                <img className="movie_image" src={fetchImages(item.poster)} alt={item.title} />
                 <p>{item.language}</p>
               </div>
             ))}

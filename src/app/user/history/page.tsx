@@ -4,6 +4,7 @@ import { useSelector } from 'react-redux'
 import { RootState } from '../Redux/store'
 import axios from 'axios'
 import './history.css'
+import { fetchImages } from '@/app/services/services'
 
 interface History {
   movieid: {
@@ -51,7 +52,7 @@ function History() {
       {/* mapping through the history array */}
       {history.map((item) => (
         <div key={item._id} className="history-item">
-          <img className="movie_image" src={`http://localhost:9000/uploads/${item.movieid.poster}`} alt={item.movieid.title} />
+          <img className="movie_image" src={fetchImages(item.movieid.poster)} alt={item.movieid.title} />
           <div className="history-item-details">
             <h2>{item.movieid.title}</h2>
             <p className="details">Language: {item.movieid.language}</p>
