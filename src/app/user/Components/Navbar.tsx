@@ -44,7 +44,7 @@ function Navbar() {
       <nav className="mobile-nav">
         <div className="mobile-nav-header">
           <div className="navbar-brand">
-            <h1>{userProfile?.name ? userProfile.name : "User"}</h1>
+            <p>{userProfile?.name ? userProfile.name : "User"}</p>
           </div>
           <button className="menu-toggle" onClick={toggleMenu}>
             <TiThMenu />
