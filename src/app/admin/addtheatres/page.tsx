@@ -4,6 +4,7 @@ import axios from 'axios';
 import './addtheatres.css'; // Import the CSS file
 import { toast,ToastContainer} from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import { fetchLocalMovies } from '@/app/services/services';
 
 type Movie = {
   _id: string;
@@ -28,10 +29,9 @@ function Addtheatres() {
     
     //Fetching already existing movies from the database
     const fetchMovies = async () => {
-      const url = 'http://localhost:9000/admin/getmovies';
       try
       {
-      const res = await axios.get(url, { headers: { 'Authorization': `Bearer ${token}` } });
+      const res:any = fetchLocalMovies()
       setMovies(res.data);
       }
       catch(error)
