@@ -91,6 +91,8 @@ function Signin() {
                     sessionStorage.setItem('email', res.data.email);
                     if (res.data.status === 1) {
              
+
+                      
                        router.push('/user/verify'); 
                     }
                   });

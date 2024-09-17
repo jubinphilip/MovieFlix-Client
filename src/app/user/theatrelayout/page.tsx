@@ -228,7 +228,7 @@ function Layout() {
               <div
 
                 key={`${rowIndex}-${seatIndex}`}
-                //dynamically gives classaname for seats based on conditions
+                //dynamically gives classaname for seats based on conditions if the selected seats array include seat name a class selected is given to it and if bookedSeats array include it a classname booked is given to it
                 className={`seat ${selectedSeats.includes(seat) ? 'selected' : ''}${bookedSeats.includes(seat) ? 'booked' : ''}`}
                 onClick={() => handleSeatClicks(seat)}>
                 {seat}
@@ -239,7 +239,7 @@ function Layout() {
       </div>
       <div>
         <p>All eyes this way</p>
-        <Image src="/assets/movie.jpg" alt="" width={1000} height={50} />
+        <img src="/assets/movie.jpg" alt="" className='screen' />
       </div>
       {/* if selected seats length is greater than 0 then payment button is visible */}
       {selectedSeats.length > 0 && <button onClick={makePayment}>Pay {price}</button>}
