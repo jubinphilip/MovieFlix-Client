@@ -37,6 +37,7 @@ function Layout() {
 
   // useEffect for fetching show details and booked seats
   useEffect(() => {
+  
     const fetchData = async () => {
       try {
         // First API call to fetch show details
@@ -154,9 +155,9 @@ function Layout() {
     console.log(userProfile.token)
     if (!userProfile.token) {
       router.push('/user/signin');
-      return;
     }
-
+    else
+    {
     try {
       const content = {
         amount: price ? price : '', // Razorpay expects the amount in paise (multiply by 100)
@@ -243,6 +244,7 @@ function Layout() {
       console.error('Payment initiation failed:', error);
       toast.error("Error initiating payment.");
     }
+  }
   };
 
   return (
