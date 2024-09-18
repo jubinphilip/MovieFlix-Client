@@ -57,7 +57,7 @@ function handleClose()
         {qrCodeUrl && (
           <div>
             <h2>Your QR Code:</h2>
-            <img src={qrCodeUrl} alt="QR Code" />
+            <img src={qrCodeUrl} alt="QR Code" /><br/>
             <button><a href="/user/userhome">Book Again</a></button>
           </div>
         )}

@@ -2,149 +2,156 @@
   position: fixed;
   top: 0;
   left: 0;
-  width: 100%;
-  height: 100%;
-  background: rgba(0, 0, 0, 0.8); 
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.75);
   display: flex;
-  justify-content: center;
   align-items: center;
-  z-index: 1000;
-  overflow: auto;
+  justify-content: center;
+  padding: 1rem;
+  z-index: 50;
 }
 
 .movieInfoContainer {
-  background: #fff;
-  padding: 30px;
-  border-radius: 15px;
-  width: 90%;
-  max-width: 1200px;
-  max-height: 90%;
-  overflow-y: auto;
+  background-color: #1a202c;
+  border-radius: 0.5rem;
+  box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+  overflow: hidden;
+  max-width: 72rem;
+  width: 100%;
   position: relative;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
 }
 
 .closeIcon {
   position: absolute;
-  top: 15px;
-  right: 15px;
-  font-size: 2.5rem;
-  color: #f44336;
+  top: 1rem;
+  right: 1rem;
+  color: white;
+  font-size: 1.5rem;
   cursor: pointer;
+  transition: color 0.3s ease;
 }
 
-.movieHeader {
+.closeIcon:hover {
+  color: #f56565;
+}
+
+.contentWrapper {
   display: flex;
-  gap: 30px;
-  align-items: flex-start;
+  flex-direction: column;
+}
+
+@media (min-width: 768px) {
+  .contentWrapper {
+    flex-direction: row;
+  }
+}
+
+.posterSection {
+  padding: 1.5rem;
+}
+
+@media (min-width: 768px) {
+  .posterSection {
+    width: 33.333333%;
+  }
 }
 
 .moviePoster {
-  width: 250px;
-  height: 350px;
-  object-fit: cover;
-  border-radius: 10px;
-  border: 2px solid #ddd;
+  width: 100%;
+  height: auto;
+  border-radius: 0.375rem;
+  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+}
+
+.infoSection {
+  padding: 1.5rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+@media (min-width: 768px) {
+  .infoSection {
+    width: 66.666667%;
+  }
+}
+
+.movieTitle {
+  font-size: 2.25rem;
+  font-weight: bold;
+  color: white;
+  margin-bottom: 0.5rem;
 }
 
 .movieMeta {
-  flex: 1;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin-bottom: 1rem;
 }
 
-.movieMeta h1 {
-  margin-bottom: 20px;
-  font-size: 3rem;
-  color: #333;
+.metaItem {
+  padding: 0.25rem 0.75rem;
+  background-color: #4a5568;
+  color: white;
+  border-radius: 9999px;
+  font-size: 0.875rem;
 }
 
-.movieMeta p {
-  margin: 8px 0;
-  color: #666;
-  font-size: 1.2rem;
+.movieSummary {
+  color: #a0aec0;
+  margin-bottom: 1.5rem;
 }
 
-.castInfo {
-  margin-top: 30px;
-}
-
-.castInfo h2 {
-  font-size: 2.5rem;
-  margin-bottom: 20px;
-  color: #333;
+.castSection {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1rem;
+  margin-bottom: 1.5rem;
 }
 
 .castMember {
-  display: flex;
-  align-items: center;
-  margin-bottom: 20px;
+  text-align: center;
 }
 
-.castMember img {
-  width: 150px;
-  height: 150px;
+.castImage {
+  width: 8rem;
+  height: 8rem;
+  border-radius: 9999px;
   object-fit: cover;
-  border-radius: 10px;
-  border: 2px solid #ddd;
-  margin-right: 20px;
+  margin: 0 auto 0.5rem;
 }
 
-.castMember p {
-  margin: 0;
-  color: #333;
-  font-size: 1.2rem;
+.castName {
+  color: white;
+  font-weight: 600;
+}
+
+.castRole {
+  color: #a0aec0;
+  font-size: 0.875rem;
+}
+
+.crewInfo {
+  color: #a0aec0;
+  margin-bottom: 1.5rem;
+}
+
+.crewLabel {
+  font-weight: 600;
 }
 
 .bookTicketsBtn {
-  margin-top: 20px;
-  padding: 15px 25px;
-  background-color: #007bff;
+  background-color: #e53e3e;
   color: white;
-  border: none;
-  border-radius: 8px;
-  cursor: pointer;
-  font-size: 1.3rem;
-  transition: background-color 0.3s ease;
-  display: block;
-  width: 100%;
+  font-weight: bold;
+  padding: 0.75rem 1.5rem;
+  border-radius: 9999px;
+  transition: all 0.3s ease;
 }
 
 .bookTicketsBtn:hover {
-  background-color: #0056b3;
-}
-
-@media (max-width: 768px) {
-  .movieInfoContainer {
-    width: 95%;
-    padding: 20px;
-  }
-
-  .movieHeader {
-    flex-direction: column;
-    align-items: center;
-  }
-
-  .moviePoster {
-    width: 100%;
-    height: auto;
-  }
-
-  .castMember {
-    flex-direction: column;
-    align-items: center;
-  }
-
-  .castMember img {
-    margin-bottom: 10px;
-  }
-}
-
-@media (max-width: 480px) {
-  .movieMeta h1 {
-    font-size: 2rem;
-  }
-
-  .bookTicketsBtn {
-    font-size: 1.1rem;
-    padding: 12px 20px;
-  }
+  background-color: #c53030;
+  transform: scale(1.05);
 }

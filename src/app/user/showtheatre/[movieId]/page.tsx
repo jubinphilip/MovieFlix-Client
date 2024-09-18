@@ -100,6 +100,7 @@ const ShowTheatres: React.FC<BookTicketProps> = ({ params }) => {
         <h2>Choose a Date</h2>
         <label htmlFor='movie-date'>Choose a date:</label>
         <input type="date" id='movie-date' name='movie-date' value={date} onChange={handleDateChange} />
+        
       </form>
       <h1>Theatres</h1>
       <ul className="theatre-list">

@@ -2,7 +2,6 @@
 import React, { useEffect, useState } from 'react'
 import { useSelector } from 'react-redux'
 import { RootState } from '../Redux/store'
-import Image from 'next/image'
 import axios from 'axios'
 import './theatreLayout.css'
 import Success from '../Components/Success'
@@ -48,7 +47,7 @@ function Layout() {
         setTicketInfo(showResponse.data);
 
         // Prepare parameters for the second API call
-        // recordseats is an object which stores the showid and date used to take booked seats for that particular show at that date
+        // recordSeats is an object which stores the showid and date used to take booked seats for that particular show at that date
         const recordSeats = {
           showid: ticketDetails.showId,
           date: ticketDetails.showdate,
@@ -124,6 +123,7 @@ function Layout() {
   // Function for creating seat layout
   function createLayout() {
     const rows = 10;
+    //const temp=Math.ceil(Number(seatInfo) % rows)//if seatnumber is not didvisible by 10
     const columns = Math.ceil(Number(seatInfo) / rows); // All seats are arranged in 10 rows
     const newSeatLayout: string[][] = []; // Initializes a multidimensional array for storing the seat layout
 
@@ -166,7 +166,6 @@ function Layout() {
 
       const token = userProfile.token;
       const url = "http://localhost:9000/user/payment";
-
       const response = await axios.post(url, content, {
         headers: {
           'Authorization': `Bearer ${token}`
