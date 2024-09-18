@@ -26,7 +26,6 @@ const router=useRouter()
         <ul className="navbar-menu">
           <li><a href="/admin/addmovies">Add Movies</a></li>
           <li><a href="/admin/addtheatres">Add Theatres</a></li>
-          <li><a href="/admin/view">View Data</a></li>
           <li><a href="/admin/manageshows">Manage Shows</a></li>
           <li><button className="logout-btn" onClick={handleLogout}>Logout</button></li>
         </ul>
@@ -49,7 +48,6 @@ const router=useRouter()
             </li>
             <li><a href="/admin/addmovies" onClick={toggleMenu}>Add Movies</a></li>
             <li><a href="/admin/addtheatres" onClick={toggleMenu}>Add Theatres</a></li>
-            <li><a href="/admin/view" onClick={toggleMenu}>View Data</a></li>
             <li><a href="/admin/manageshows" onClick={toggleMenu}>Manage Shows</a></li>
             <li><button className="logout-btn" onClick={() => { handleLogout(); toggleMenu(); }}>Logout</button></li>
           </ul>
