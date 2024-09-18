@@ -43,7 +43,7 @@ function Addmovies() {
 //Storing the token in a session
     const token = sessionStorage.getItem('adminToken'); // Retrieve token from sessionStorage
 
-    //Uploading all coontents to formdata beacause for elements contain multipart data
+    //Appending all coontents to formdata beacause for elements contain multipart data
 
     const formData = new FormData();
     formData.append('title', data.title);
