@@ -87,7 +87,15 @@ function Signin() {
                   .then((res) => {
                     console.log('Credential submitted');
                     const token = res.data.token;
-                    console.log('token', token);
+                    dispatch(
+                      setUser({
+                        userid: res.data.data._id,
+                        token:token,
+                        name: res.data.data.username,
+                        email: res.data.data.email,
+                      })
+                    );
+                    console.log(res);
                     sessionStorage.setItem('email', res.data.email);
                     if (res.data.status === 1) {
              
