@@ -1,74 +1,66 @@
-@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap');
+/* Verify.module.css */
 
 .container {
-  margin: 0;
-  padding: 0;
-  font-family: 'Poppins', sans-serif;
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-  height: 100vh;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-
-.verifyContainer {
-  width: 100%;
-  max-width: 400px;
-  padding: 40px;
-  background-color: white;
-  border-radius: 10px;
-  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
-}
-
-.verifyTitle {
-  color: #333;
-  font-size: 28px;
-  font-weight: 600;
-  margin-bottom: 30px;
-  text-align: center;
-}
-
-.verifyForm {
   display: flex;
   flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
+  height: 100vh;
+  background-color: #f4f4f9;
 }
 
-.verifyInput {
-  margin-bottom: 20px;
-  padding: 12px;
-  border: 1px solid #ddd;
-  border-radius: 5px;
-  font-size: 16px;
-  transition: border-color 0.3s ease;
+.heading {
+  margin-top: 40px;
+  font-size: 2rem;
+  color: #333;
 }
 
-.verifyInput:focus {
-  outline: none;
-  border-color: #667eea;
+.formContainer {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  max-width: 400px;
+  background-color: #fff;
+  padding: 30px;
+  margin-top: 20px;
+  border-radius: 8px;
+  box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.1);
 }
 
-.verifyButton {
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+.inputField {
+  width: 100%;
+  padding: 10px;
+  margin: 15px 0;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  font-size: 1rem;
+  box-sizing: border-box;
+}
+
+.submitButton {
+  width: 100%;
+  padding: 10px;
+  background-color: #007bff;
   color: white;
   border: none;
-  padding: 12px;
-  border-radius: 5px;
-  font-size: 16px;
-  font-weight: 500;
+  border-radius: 4px;
+  font-size: 1rem;
   cursor: pointer;
-  transition: transform 0.1s ease;
 }
 
-.verifyButton:hover {
-  transform: translateY(-2px);
+.submitButton:hover {
+  background-color: #0056b3;
 }
 
-.verifyButton:active {
-  transform: translateY(0);
-}
-
-@media (max-width: 480px) {
-  .verifyContainer {
+@media (max-width: 600px) {
+  .formContainer {
     padding: 20px;
+  }
+
+  .inputField,
+  .submitButton {
+    font-size: 0.9rem;
   }
 }

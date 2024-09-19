@@ -41,7 +41,7 @@ type Shows = {
 };
 
 function ManageShows() {
-  const timings = ['10.30', '1.00', '4.30', '7.30', '10.00'];//array which stores timings
+  const timings = ['10.30 AM', '1.00 PM', '4.30 PM', '7.30 PM', '10.00 PM'];//array which stores timings
   const [theatres, setTheatre] = useState<Theatre[]>([]);
   const [movies, setMovies] = useState<Movie[]>([]);
   const [showData, setShowData] = useState<ShowData>({} as ShowData);
