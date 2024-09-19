@@ -5,8 +5,10 @@ import './styles/home.css';
 export default function Home() {
   return (
     <div className="container">
+   
       <main className="main-content">
-        <h1 className="title">Welcome to Movie Booking</h1>
+      <h1 className='main-head'>MOVIEFLIX</h1>
+        <h2 className="title">Welcome to Movie Booking</h2>
         <p className="description">
           Your one-stop solution for booking movie tickets. Sign up to start enjoying our services!
         </p>
