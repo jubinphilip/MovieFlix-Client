@@ -92,6 +92,7 @@ function Addmovies() {
 
   return (
     <div className="addmovies-container">
+      <ToastContainer/>
       <h1 className="addmovies-title">Add Movie</h1>
       <form onSubmit={handleSubmit} className="addmovies-form" encType="multipart/form-data">
         <div className="form-group">
