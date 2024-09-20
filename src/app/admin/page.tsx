@@ -4,6 +4,7 @@ import React, { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import axios from 'axios';
 import styles from './home.module.css'; 
+import { ToastContainer,toast } from 'react-toastify';
 
 
 type Data = {
@@ -31,20 +32,17 @@ function Admin() {
         if (res.status === 200) {
           router.push('/admin/adminhome');
         }
-        else
-        {
-
-        }
       })
       .catch((error) => {
         console.error('Error during login:', error);
-        alert('Login failed. Please check your credentials.');
+        toast.error('Login failed. Please check your credentials.');
       });
   };
 
   return (
     <div className={styles.container}>
     <div className={styles.adminLoginContainer}>
+    <ToastContainer/>
       <form onSubmit={handleSubmit} className={styles.adminLoginForm}>
         <h1 className={styles.adminLoginTitle}>Admin Login</h1>
         <p className={styles.adminLoginSubtitle}>Please enter your credentials</p>
