@@ -3,7 +3,7 @@ import axios from 'axios';
 import { useRouter } from 'next/navigation';
 import { IoCloseCircleSharp } from 'react-icons/io5';
 import styles from './styles/movieinfo.module.css';
-import { fetchImages } from '@/app/services/services';
+import { fetchImages, getMovieInfo } from '@/app/services/services';
 
 interface MovieDetailsProps {
   movieId: string | undefined | number;
@@ -34,11 +34,13 @@ const Movieinfo = ({ movieId, movieState }: MovieDetailsProps) => {
 
   //getting infrmation of the movie clicked by the user
   useEffect(() => {
-    const url = `http://localhost:9000/user/getmovieinfo/${movieId}`;
-    axios.get(url).then((res) => {
-      setMovieInfo(res.data);
-    });
+    const fetchData = async () => {
+      const data = await getMovieInfo(movieId);
+      setMovieInfo(data);
+    };
+    fetchData();
   }, [movieId]);
+  
 
   const handleBookTickets = () => {
     router.push(`/user/showtheatre/${movieId}`);

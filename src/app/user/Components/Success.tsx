@@ -2,7 +2,6 @@ import axios from 'axios';
 import React, { useState } from 'react';
 import { useSelector } from 'react-redux';
 import { RootState } from '../Redux/store';
-import { IoIosCloseCircle } from "react-icons/io";
 import './styles/success.css'
 
 interface SuccessProps {
@@ -13,7 +12,6 @@ interface SuccessProps {
 const Success: React.FC<SuccessProps> = ({ id,show }) => {
   const userProfile = useSelector((state: RootState) => state.user);
   const token = userProfile.token;
-  const[status,setStatus]=useState(show)
   const [qrCodeUrl, setQrCodeUrl] = useState<string | null>(null);
   const[text,setText]=useState('Send Details To Whatsapp')
 
@@ -42,14 +40,11 @@ const Success: React.FC<SuccessProps> = ({ id,show }) => {
       alert('Failed to generate QR code.');
     }
   };
-function handleClose()
-{
-  setStatus(false)
-}
+
   return (
     <div className="success-overlay">
-      {status && <div className="success-modal">
-        <IoIosCloseCircle onClick={handleClose}/>
+      {show && <div className="success-modal">
+       
         <h1>Booking Successful</h1>
        {/*  <p><strong>Booking ID:</strong> {id}</p> */}
         {/* showing the qr code url on screen on a button click and on successfull qr code generation the text is changed */}

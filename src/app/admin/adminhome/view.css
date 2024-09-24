@@ -57,4 +57,9 @@
     font-size: 0.9rem;
     color: #444;
   }
-  
+  .edit-button{
+    background-color: #4CAF50;
+    width: 100px;
+    height: 30px;
+    margin-top: 5px;
+  }

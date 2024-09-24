@@ -43,3 +43,196 @@ export function fetchImages(imageUrl:string){
   const url=`http://localhost:9000/uploads/${imageUrl}`;
   return url
 }
+//helper function for getting movie info
+export async function getMovieInfo(movieId: string | number | undefined) {
+  const url = `http://localhost:9000/user/getmovieinfo/${movieId}`;
+  
+  try {
+    const res = await axios.get(url);
+    return res.data;  // This will return the movie data properly
+  } catch (error) {
+    console.error('Error fetching movie info:', error);
+    return undefined;  // Handle the error case by returning undefined
+  }
+}
+//helper function for gettting thetre
+export async function getShowTheatre(movieId:string)
+{
+  const url = `http://localhost:9000/user/getshowtheatre/${movieId}`; //getting all show information with the particular movie
+  try{
+  const res = await axios.get(url);
+  return res.data;
+  }catch (error) {
+    console.error('Error fetching Theatre info:', error);
+    return undefined;  // Handle the error case by returning undefined
+  }
+}
+//helper function for geting show details
+export async function getShowDetails(showid:any)
+{
+  const showUrl = `http://localhost:9000/user/getshow/${showid}`;
+  try
+  {
+  const showResponse = await axios.get(showUrl);
+  return showResponse.data;
+  }
+  catch (error) {
+    console.error('Error fetching Show info:', error);
+  }
+}
+//helper function for getting the bookings data
+export async function getBookings(seats:any)
+{
+  const bookingsUrl = 'http://localhost:9000/user/getbookings';
+  const bookingsResponse = await axios.get(bookingsUrl, { params:seats });
+  return bookingsResponse.data.bookedSeats;
+}
+
+
+
+//Admin Functions 
+
+
+//Login
+
+
+export const adminLogin = async (data: any) => {
+  try {
+    const response = await axios.post('http://localhost:9000/admin/login', data);
+    return response.data; // Return the response data
+  } catch (error) {
+    throw error; 
+  }
+};
+//Adds Theatre
+export async function addTheatre(data: any, token: any) {
+  const url = 'http://localhost:9000/admin/addtheatre';
+  try {
+    const response = await axios.post(url, data, { 
+      headers: { 'Authorization': `Bearer ${token}` } 
+    });
+    return response;  //return response
+  } catch (error: any) {
+   
+    console.error("Error occurred while adding theatre:", error);
+    if (error.response) {
+      return {
+        status: error.response.status,
+        data: { error: error.response.data.message || 'Failed to add theatre' },
+      };
+    } else {
+      // Handle network or other unexpected errors
+      return {
+        status: 500,
+        data: { error: 'Server error or network issue' },
+      };
+    }
+  }
+}
+
+//Function For Editing Movies
+export async function editMovies(editData: any, token: any) {
+  const url = 'http://localhost:9000/admin/editmovies';
+  try {
+    const response = await axios.post(url, editData, {
+      headers: { Authorization: `Bearer ${token}` },
+    });
+    return response;
+  } catch (error: any) {
+    console.error("Error occurred while editing movies:", error);
+
+    if (error.response) {
+      return {
+        status: error.response.status,
+        data: { error: error.response.data.message || 'Failed to edit movie' },
+      };
+    } else {
+      return {
+        status: 500,
+        data: { error: 'Server error or network issue' },
+      };
+    }
+  }
+}
+
+//Function For getting Shows
+export const getShows = async (token: string) => {
+  try {
+    const response = await axios.get('http://localhost:9000/admin/getshows', {
+      headers: { 'Authorization': `Bearer ${token}` },
+    });
+    return response.data;
+  } catch (error: any) {
+    console.error("Error fetching shows:", error);
+    throw error; // Re-throw the error so it can be caught in the calling function
+  }
+};
+
+//Function For deleting a Show 
+export const deleteShow = async (id: string, token: string) => {
+  const url = `http://localhost:9000/admin/deleteshow/${id}`;
+  
+  if (!token) {
+    throw new Error("Token is required for authentication");
+  }
+
+  try {
+    const response = await axios.delete(url, {
+      headers: { 'Authorization': `Bearer ${token}` },
+    });
+    return response.data; // Return the response data
+  } catch (error: any) {
+    console.error("Error deleting show:", error);
+    throw error; // Re-throw the error to be handled in the calling function
+  }
+};
+
+
+//Function for getting movies on a particular theatre
+export const getTheatre = async (theatreId: string, token: string) => {
+  if (!token) {
+    throw new Error("Token is required for authentication");
+  }
+
+  try {
+    const response = await axios.get(`http://localhost:9000/admin/gettheatre/${theatreId}`, {
+      headers: { 'Authorization': `Bearer ${token}` },
+    });
+    return response.data; // Return the theatre data
+  } catch (error: any) {
+    console.error("Error fetching theatre details:", error);
+    throw error; // Re-throw the error to be handled in the calling function
+  }
+};
+
+//Function For adding a Show 
+export const addShow = async (showData: any, token: string) => {
+  if (!token) {
+    throw new Error("Token is required for authentication");
+  }
+
+  try {
+    const response = await axios.post('http://localhost:9000/admin/addshows', showData, {
+      headers: { 'Authorization': `Bearer ${token}` },
+    });
+    return response.data; // Return the response data
+  } catch (error: any) {
+    console.error("Error adding show:", error);
+    throw error; // Re-throw the error to be handled in the calling function
+  }
+};
+export const updateMovieInfo = async (movieId: string, formData: FormData, token: string) => {
+  try {
+    console.log("Function Called")
+    console.log(movieId,formData,token)
+    const response = await axios.post(`http://localhost:9000/admin/updatemovie/${movieId}`, formData, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+        'Content-Type': 'multipart/form-data',
+      },
+    });
+    return response;
+  } catch (error) {
+    throw error;
+  }
+};

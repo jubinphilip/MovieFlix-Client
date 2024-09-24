@@ -1,12 +1,14 @@
 'use client'
 
-import axios from 'axios';
 import React, { useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { setTicketDetails } from '../../Redux/Feautures/user/ticketSlice';
+import SelectSeats from '../../Components/selectSeats';
 import { useRouter } from 'next/navigation';
+import { ToastContainer,toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 import './showtheatre.css'; 
-import { fetchImages } from '@/app/services/services';
+import { fetchImages, getShowTheatre } from '@/app/services/services';
 
 interface BookTicketProps {
   params: { movieId: string }
@@ -32,6 +34,7 @@ interface Movie {
     seats:string
   }
   timing: string;
+  remaining_seats:string;
   updatedAt: string;
 }
 
@@ -40,6 +43,7 @@ const ShowTheatres: React.FC<BookTicketProps> = ({ params }) => {
   const [theatresWithMovies, setTheatresWithMovies] = useState<Movie[]>([]); //State for getting theatres which run that movie
   const [filteredMovies, setFilteredMovies] = useState<Movie[]>([]); //state for filtering movie with date and time
   const [date, setDate] = useState<string>(''); //stores date
+  const[selectSeat,setSelectSeat]=useState(false)
   const [selectedTime, setSelectedTime] = useState<string>(''); //stores selected time
   const timings = ['10.30 AM', '1.00 PM', '4.30 PM', '7.30 PM', '10.00 PM']
   const router = useRouter();
@@ -48,15 +52,15 @@ const ShowTheatres: React.FC<BookTicketProps> = ({ params }) => {
   useEffect(() => {
     const fetchMovies = async () => {
       try {
-        const url = `http://localhost:9000/user/getshowtheatre/${movieId}`; //getting all show information with the particular movie
-        const response = await axios.get(url);
-        setTheatresWithMovies(response.data);
+        const data = await getShowTheatre(movieId); //Getting theatres with that movie 
+        setTheatresWithMovies(data);  
       } catch (error) {
         console.error('Error fetching movies:', error);
       }
     };
     fetchMovies();
   }, [movieId]);
+  
 
   useEffect(() => {
     if (date || selectedTime) {
@@ -94,20 +98,20 @@ const ShowTheatres: React.FC<BookTicketProps> = ({ params }) => {
     const selectedDate = new Date(date);
 
     if (!date) {
-      alert("Please select a show date");
+      toast.error("Please select a show date");
     } else if (selectedDate < currentDate) { //selected date needs to >= current date
-      alert("Incorrect date. Please select a future date.");
-    } else if (!selectedTime) {
-      alert("Please select a show time");
+      toast.error("Incorrect date. Please select a future date.");
     } else {
       //All these informations are stored in the redux state and then is routed to next page
       dispatch(setTicketDetails({ movieId, theatreId, timing, showId, showdate: date }));
-      router.push('/user/theatrelayout');
+      setSelectSeat(true)
     }
   }
 
   return (
     <div className="show-theatres-container">
+      { selectSeat && <SelectSeats/>}
+      <ToastContainer/>
       <form onSubmit={handleDate} className="date-form">
         <h2>Choose a Date and Time</h2>
         <label htmlFor='movie-date'>Choose a date:</label>
@@ -132,7 +136,10 @@ const ShowTheatres: React.FC<BookTicketProps> = ({ params }) => {
             <div className="theatre-item-content">
               <h2>{movie.movie_id.title}</h2>
               <p><strong>Language:</strong> {movie.movie_id.language}</p>
-              <p><strong>Seats:</strong> {movie.theatre_id.seats}</p>
+              <p style={{ color: Number(movie.remaining_seats) < 25 ? 'red' : Number(movie.remaining_seats) < 50 ? 'yellow' : '' }}>
+    <strong>Seats:</strong> {movie.remaining_seats}
+</p>
+
               <p><strong>Theatre:</strong> {movie.theatre_id.theatrename}</p>
               <p><strong>Location:</strong> {movie.theatre_id.theatreloc}</p>
               <p><strong>Ticket Price:</strong> {movie.theatre_id.ticketprice}</p>

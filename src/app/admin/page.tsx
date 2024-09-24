@@ -2,9 +2,10 @@
 
 import React, { useState } from 'react';
 import { useRouter } from 'next/navigation';
-import axios from 'axios';
 import styles from './home.module.css'; 
 import { ToastContainer,toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+import { adminLogin } from '../services/services';
 
 
 type Data = {
@@ -20,23 +21,19 @@ function Admin() {
     setData((prev) => ({ ...prev, [e.target.name]: e.target.value }));
   };
 
-  const handleSubmit: React.FormEventHandler<HTMLFormElement> = (e) => {
+  const handleSubmit: React.FormEventHandler<HTMLFormElement> = async (e) => {
     e.preventDefault();
-
+  
     console.log(data);
-    const url = 'http://localhost:9000/admin/login';
-    axios.post(url, data)
-      .then((res) => {
-        console.log(res.data);
-        sessionStorage.setItem('adminToken', res.data.token);
-        if (res.status === 200) {
-          router.push('/admin/adminhome');
-        }
-      })
-      .catch((error) => {
-        console.error('Error during login:', error);
-        toast.error('Login failed. Please check your credentials.');
-      });
+    
+    try {
+      const res = await adminLogin(data);
+      sessionStorage.setItem('adminToken', res.token);
+      router.push('/admin/adminhome');
+    } catch (error) {
+      console.error('Error during login:', error);
+      toast.error('Login failed. Please check your credentials.');
+    }
   };
 
   return (

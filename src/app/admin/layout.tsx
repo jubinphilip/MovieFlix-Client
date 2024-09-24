@@ -1,6 +1,6 @@
 
 'use client'
-import Navbar from './navbar/page' // Ensure the correct path
+import Navbar from './components/Navbar' 
 import { usePathname } from 'next/navigation';
 
 export default function RootLayout({

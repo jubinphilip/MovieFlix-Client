@@ -12,7 +12,10 @@
     max-width: 800px;
     margin-top: 20px;
   }
-  
+    .form-container h1{
+      text-align: center;
+      color: #2c3e50;
+    }
   .form-group {
     margin-bottom: 15px;
   }

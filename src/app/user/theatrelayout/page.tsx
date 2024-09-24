@@ -6,7 +6,9 @@ import axios from 'axios'
 import './theatreLayout.css'
 import Success from '../Components/Success'
 import { useRouter } from 'next/navigation'
-import { toast } from 'react-toastify'
+import { toast ,ToastContainer} from 'react-toastify'
+import 'react-toastify/dist/ReactToastify.css'
+import { getBookings, getShowDetails } from '@/app/services/services'
 
 interface Shows {
   _id: string,
@@ -32,19 +34,17 @@ function Layout() {
   const [booking, setBooking] = useState(false)//storing the state for showing the success component on successfull payment
   const [selectedSeats, setSelectedSeats] = useState<string[]>([])//storing the seatnames selected by the user
   const [bookingId, setBookingId] = useState('')//Booking id if the current booking is set after a successfull payment and is passed to next component
-  const rowLetters = 'ABCDEFGHIJ'//array of alphabets for displaying seats
+  const rowLetters = 'ABCDEFGHIJK'//array of alphabets for displaying seats
 
-  // useEffect for fetching show details and booked seats
+  // useEffect for fetching show details, booked seats, and creating seat layout
   useEffect(() => {
-  
     const fetchData = async () => {
       try {
         // First API call to fetch show details
-        const showUrl = `http://localhost:9000/user/getshow/${ticketDetails.showId}`;
-        const showResponse = await axios.get(showUrl);
-        console.log(showResponse.data);
-        setSeatInfo(showResponse.data.seats);
-        setTicketInfo(showResponse.data);
+        const data = await getShowDetails(ticketDetails.showId)
+        console.log(data);
+        setSeatInfo(data.seats);
+        setTicketInfo(data);
 
         // Prepare parameters for the second API call
         // recordSeats is an object which stores the showid and date used to take booked seats for that particular show at that date
@@ -52,11 +52,12 @@ function Layout() {
           showid: ticketDetails.showId,
           date: ticketDetails.showdate,
         };
-
         // Second API call to fetch booked seats
-        const bookingsUrl = 'http://localhost:9000/user/getbookings';
-        const bookingsResponse = await axios.get(bookingsUrl, { params: recordSeats });
-        setBookedSeats(bookingsResponse.data.bookedSeats); // Getting booked seats
+        const bookingsData = await getBookings(recordSeats)//passing record of seats
+        setBookedSeats(bookingsData);  // Getting booked seats
+
+        // Create seat layout after fetching data
+        createLayout(data.seats);
       } catch (error) {
         console.error("Error fetching data:", error);
         toast.error("Error fetching seat or booking details!");
@@ -79,22 +80,44 @@ function Layout() {
     }
   }, [])
 
-  // Function to handle seat layout creation and display
-  function handleClick() {
-    try {
-      console.log(seatInfo)
-      createLayout() // Initializes the createlayout function for showing the seat layout of a theatre
-      console.log("user", userProfile)
-      console.log(ticketDetails)
-      console.log(ticketInfo)
-    } catch (error) {
-      console.error('Error in creating seat layout:', error);
-      toast.error('Error displaying seat layout.');
+  // Function for creating seat layout
+  function createLayout(seats: number) {
+    const rows = 10;
+    const remaining_seats = seats % 10;
+    const seatCount = seats - remaining_seats;
+    const columns = Math.ceil(seatCount / rows); // All seats are arranged in 10 rows
+    const newSeatLayout: string[][] = []; // Initializes a multidimensional array for storing the seat layout
+
+    // Row letters, assuming you have defined them somewhere
+   // const rowLetters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'; // Example for rows A to Z
+
+    // Create the main seat layout
+    for (let row = 0; row < rows; row++) {
+        const rowSeats: string[] = []; // Array for storing seats in a row
+        for (let col = 0; col < columns; col++) {
+            const seatName = `${rowLetters[row]}${col + 1}`;
+            rowSeats.push(seatName); // Pushing seats to the row
+        }
+        newSeatLayout.push(rowSeats); // Push a row to the array
     }
-  }
+
+    // If there are remaining seats, create a new row for them
+    if (remaining_seats > 0) {
+        const remainingRow: string[] = [];
+        for (let i = 0; i < remaining_seats; i++) {
+            const seatName = `${rowLetters[rows]}${i + 1}`; // Use the next row letter
+            remainingRow.push(seatName);
+        }
+        newSeatLayout.push(remainingRow); // Add the remaining seats row to the layout
+    }
+
+    console.log(newSeatLayout);
+    setSeatLayout(newSeatLayout); // Setting the layout
+}
 
   // Function to handle seat clicks
   const handleSeatClicks = (seat: string) => {
+    const seatcount=Number(sessionStorage.getItem('seatcount'))
     if (bookedSeats.includes(seat)) {
       toast.warn("Already booked")
       return
@@ -106,10 +129,10 @@ function Layout() {
           updatedSeats = prev.filter(s => s !== seat);
         } else {
           // If seat is not selected, add it to the array
-          if (prev.length < 10) {
+          if (prev.length < seatcount) {
             updatedSeats = [...prev, seat];
           } else {
-            console.log("You can only book 10 seats at a time.");
+           toast.error(`You choose ${seatcount} seats only`);
             updatedSeats = prev;
           }
         }
@@ -118,25 +141,6 @@ function Layout() {
         return updatedSeats;
       });
     }
-  }
-
-  // Function for creating seat layout
-  function createLayout() {
-    const rows = 10;
-    //const temp=Math.ceil(Number(seatInfo) % rows)//if seatnumber is not didvisible by 10
-    const columns = Math.ceil(Number(seatInfo) / rows); // All seats are arranged in 10 rows
-    const newSeatLayout: string[][] = []; // Initializes a multidimensional array for storing the seat layout
-
-    for (let row = 0; row < rows; row++) {
-      const rowSeats: string[] = []; // Array for storing seats in a row
-      for (let col = 0; col < columns; col++) {
-        const seatName = `${rowLetters[row]}${col + 1}`;
-        rowSeats.push(seatName); // Pushing seats to the row
-      }
-      newSeatLayout.push(rowSeats); // Push a row to the array
-    }
-    console.log(seatLayout)
-    setSeatLayout(newSeatLayout); // Setting the layout
   }
 
   // Info needed for adding data to the db
@@ -248,9 +252,10 @@ function Layout() {
 
   return (
     <div className="layout-container">
+      <ToastContainer/>
       {booking && <Success id={bookingId} show={true} />} {/* If booking success, show success component */}
-      {seatLayout.length === 0 && <button onClick={handleClick}>Show Seats</button>}
       <p>Ticket Price: {ticketInfo?.theatre_id.ticketprice}</p>
+      
       <div className="seating-layout">
         {seatLayout.map((row, rowIndex) => (
           <div key={rowIndex} className="seat-row">

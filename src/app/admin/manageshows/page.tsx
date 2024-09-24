@@ -1,11 +1,10 @@
 'use client';
 import React, { useEffect, useState, ChangeEvent } from 'react';
 import { RiDeleteBin2Fill } from "react-icons/ri";
-import axios from 'axios';
 import './manageshow.css'; 
 import { toast,ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import { fetchImages, fetchTheatres } from '@/app/services/services';
+import { addShow, deleteShow, fetchImages, fetchTheatres, getShows, getTheatre } from '@/app/services/services';
 
 type Movie = {
   _id: string;
@@ -49,20 +48,22 @@ function ManageShows() {
   const token = sessionStorage.getItem('adminToken');
 
   //Function for fetching shows
-  const fetchShows = () => {
-    try
-    {
-    axios.get('http://localhost:9000/admin/getshows', {
-      headers: { 'Authorization': `Bearer ${token}` }
-    }).then((res) => {
-      setShows(res.data);
-    });
-}
-catch(error)
-{
-  console.error("an error occured")
-}
-};
+  const fetchShows = async () => {
+    if (!token) {
+      console.error("Token is null or undefined");
+      return; // Exit the function if the token is invalid
+    }
+  
+    try {
+      const data = await getShows(token); // Call the service  for getting shows
+      setShows(data);
+      console.log(data);
+    } catch (error) {
+      console.error("An error occurred while fetching shows", error);
+    }
+  };
+  
+  
 
   //Function for getting theatres
   useEffect(() => {
@@ -93,66 +94,71 @@ catch(error)
     }));
 
     //Function for getting a specific theatre and its movies
-    try
-    {
-    axios.get(`http://localhost:9000/admin/gettheatre/${theatre_id}`, {
-      headers: { 'Authorization': `Bearer ${token}` }
-    }).then((res) => {
-      const { movie1, movie2, movie3 } = res.data;
-      setMovies([movie1, movie2, movie3]);
-    });
-}catch(error)
-{
-  console.log("Error Occured")
-}
+    const fetchTheatre = async (theatre_id: string) => {
+      try {
+        if(token==null)
+          {
+            toast.error("Session Expired Login")
+          }
+          else
+          {
+        const data = await getTheatre(theatre_id, token); // Call the service function
+        const { movie1, movie2, movie3 } = data; // Destructure the movies
+        setMovies([movie1, movie2, movie3]); // Update state with the movies
+          }
+      } catch (error) {
+        console.log("Error occurred while fetching theatre details", error);
+      }
+    
+    };
+    fetchTheatre(theatre_id)
   }
 
   const handleChange = (e: ChangeEvent<HTMLSelectElement | HTMLInputElement>) => {
     setShowData((prev) => ({ ...prev, [e.target.name]: e.target.value }));
   };
 //Functon for adding shows
-  const handleSubmit: React.FormEventHandler<HTMLFormElement> = (e) => {
-    e.preventDefault();
-    try{
-    axios.post('http://localhost:9000/admin/addshows', showData, {
-      headers: { 'Authorization': `Bearer ${token}` }
-    }).then((res) => {
-      if(res.status==200)
-      {
-      toast.success(res.data.message)
+const handleSubmit: React.FormEventHandler<HTMLFormElement> = async (e) => {
+  e.preventDefault();
+
+  // Assuming token can be string or null
+  if (!token) {
+    toast.error("Token is not available");
+    return; // Exit if token is null
+  }
+
+  try {
+    const response = await addShow(showData, token); // Call the service function for adding show
+
+    if (response) {
+      toast.success(response.message);
       fetchShows();
+    }
+  } catch (error) {
+    toast.error("An error occurred while adding the show");
+    console.error("Error details:", error);
+  }
+};
+
+
+  //Function for deleting a particular show
+  const manageShow = async (id: string) => {
+    try {
+      if(token==null)
+      {
+        toast.error("Session Expired Login")
       }
       else
       {
-        toast.error(res.data.message)
+      const message = await deleteShow(id, token); // Call the service function for deleting movies
+      toast.success(message); // Display success message
+      fetchShows(); // Refresh the shows
       }
-    });
-  }catch(error)
-  {
-    toast.error("An error Occured")
-  }
+    } catch (error) {
+      toast.error("Unexpected error occurred");
+    }
   };
-
-  //Function for deleting a particular show
-  const deleteShow = (id: string) => {
-    const url = `http://localhost:9000/admin/deleteshow/${id}`;
-    try{
-    axios.delete(url, {
-      headers: { 'Authorization': `Bearer ${token}` }
-    }).then((res) => {
-      if (res.status === 200) {
-        toast.success(res.data.message)
-        fetchShows();
-      } else {
-        toast.error(res.data.message)
-      }
-    });
-  }
-  catch(error)
-  {
-    toast.error("Unexpected Error Occured")
-  }
-  };
+  
 
 
   return (
@@ -214,7 +220,7 @@ catch(error)
                     <p>Theatre: {show.theatre_id.theatrename}</p>
                     <p>Showtime: {show.timing}</p>
                     <p>Seats Available: {show.seats}</p>
-                    <RiDeleteBin2Fill className="delete-icon" onClick={() => deleteShow(show._id)} />
+                    <RiDeleteBin2Fill className="delete-icon" onClick={() => manageShow(show._id)} />
                   </div>
                 </div>
               ) : (

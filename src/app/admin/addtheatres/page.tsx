@@ -1,10 +1,9 @@
 'use client';
 import React, { useEffect, useState } from 'react';
-import axios from 'axios';
-import './addtheatres.css'; // Import the CSS file
+import './addtheatres.css'; 
 import { toast,ToastContainer} from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import { fetchLocalMovies, fetchTheatres } from '@/app/services/services';
+import { addTheatre, editMovies, fetchLocalMovies, fetchTheatres } from '@/app/services/services';
 
 type Movie = {
   _id: string;
@@ -70,35 +69,31 @@ function Addtheatres() {
     setEditdata((prev) => ({ ...prev, [name]: value }));
   };
 //Function for editing currently running movies
-  const handleEdit =  (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    const url = 'http://localhost:9000/admin/editmovies';
-    console.log(editData)
-    try{
-     axios.post(url, editData, { headers: { 'Authorization': `Bearer ${token}` } }).then((res)=>
-    {
-      if(res.status===200)
-      {
-        toast.success(res.data.message)
-      }
-      else{
-        toast.error(res.data.message)
-      }
-    });
+const handleEdit = async (e: React.FormEvent<HTMLFormElement>) => {
+  e.preventDefault();
+  console.log(editData);
+
+  try {
+    const res = await editMovies(editData, token);  // Call the API service for editig movies
+
+    if (res && res.status === 200) {
+      toast.success(res.data.message || 'Movie updated successfully');
+    } else if (res) {
+      toast.error(res.data.error || 'An error occurred while editing the movie');
+    } else {
+      toast.error('No response from server');
+    }
+  } catch (err) {
+    console.error("An unexpected error occurred:", err);
+    toast.error('An unexpected error occurred');
   }
-  catch(err)
-  {
-    toast.error("An Error Occured")
-  }
-  };
+};
+
 //Function for adding the theatre
   const handleSubmit: React.FormEventHandler<HTMLFormElement> = async (e) => {
     e.preventDefault();
-    const url = 'http://localhost:9000/admin/addtheatre';
-    try
-    {
-    await axios.post(url, data, { headers: { 'Authorization': `Bearer ${token}` } }).then((res)=>
-    {
+    //Calling Api service
+    const res=await addTheatre(data,token)
       if(res.status===200)
       {
         toast.success(res.data.message)
@@ -107,13 +102,10 @@ function Addtheatres() {
       {
         toast.error(res.data.error)
       }
-    });
+    
   }
-  catch(err)
-  {
-    toast.error("An error Occured")
-  }
-  };
+
+
 
   return (
     <div className="container">
