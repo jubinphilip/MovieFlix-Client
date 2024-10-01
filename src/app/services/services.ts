@@ -3,7 +3,7 @@ import axios from 'axios';
 //Fetching Movies from the database
 export const fetchLocalMovies = async (role:string) => {
   //Role determines whether admin or user is fetching movies
-  const url = `http://localhost:9000/${role}/getmovies`;
+  const url = `https://movieflix-server.onrender.com/${role}/getmovies`;
   try {
     const response = await axios.get(url);
     return response.data; 
@@ -28,7 +28,7 @@ export const fetchUpcomingMovies = async () => {
 
 //Fetching List of theatres
 export const fetchTheatres = async () => {
-  const url = 'http://localhost:9000/user/gettheatres';
+  const url = 'https://movieflix-server.onrender.com/user/gettheatres';
   try {
     const response = await axios.get(url);
     return response.data;
@@ -40,12 +40,12 @@ export const fetchTheatres = async () => {
 
 //Image Service Api all of the images are displayed in the website from the uploads directory 
 export function fetchImages(imageUrl:string){
-  const url=`http://localhost:9000/uploads/${imageUrl}`;
+  const url=`https://movieflix-server.onrender.com/uploads/${imageUrl}`;
   return url
 }
 //helper function for getting movie info
 export async function getMovieInfo(movieId: string | number | undefined) {
-  const url = `http://localhost:9000/user/getmovieinfo/${movieId}`;
+  const url = `https://movieflix-server.onrender.com/user/getmovieinfo/${movieId}`;
   
   try {
     const res = await axios.get(url);
@@ -58,7 +58,7 @@ export async function getMovieInfo(movieId: string | number | undefined) {
 //helper function for gettting thetre
 export async function getShowTheatre(movieId:string)
 {
-  const url = `http://localhost:9000/user/getshowtheatre/${movieId}`; //getting all show information with the particular movie
+  const url = `https://movieflix-server.onrender.com/user/getshowtheatre/${movieId}`; //getting all show information with the particular movie
   try{
   const res = await axios.get(url);
   return res.data;
@@ -70,7 +70,7 @@ export async function getShowTheatre(movieId:string)
 //helper function for geting show details
 export async function getShowDetails(showid:any)
 {
-  const showUrl = `http://localhost:9000/user/getshow/${showid}`;
+  const showUrl = `https://movieflix-server.onrender.com/user/getshow/${showid}`;
   try
   {
   const showResponse = await axios.get(showUrl);
@@ -83,7 +83,7 @@ export async function getShowDetails(showid:any)
 //helper function for getting the bookings data
 export async function getBookings(seats:any)
 {
-  const bookingsUrl = 'http://localhost:9000/user/getbookings';
+  const bookingsUrl = 'https://movieflix-server.onrender.com/user/getbookings';
   const bookingsResponse = await axios.get(bookingsUrl, { params:seats });
   return bookingsResponse.data.bookedSeats;
 }
@@ -98,7 +98,7 @@ export async function getBookings(seats:any)
 
 export const adminLogin = async (data: any) => {
   try {
-    const response = await axios.post('http://localhost:9000/admin/login', data);
+    const response = await axios.post('https://movieflix-server.onrender.com/admin/login', data);
     return response.data; // Return the response data
   } catch (error) {
     throw error; 
@@ -106,7 +106,7 @@ export const adminLogin = async (data: any) => {
 };
 //Adds Theatre
 export async function addTheatre(data: any, token: any) {
-  const url = 'http://localhost:9000/admin/addtheatre';
+  const url = 'https://movieflix-server.onrender.com/admin/addtheatre';
   try {
     const response = await axios.post(url, data, { 
       headers: { 'Authorization': `Bearer ${token}` } 
@@ -132,7 +132,7 @@ export async function addTheatre(data: any, token: any) {
 
 //Function For Editing Movies
 export async function editMovies(editData: any, token: any) {
-  const url = 'http://localhost:9000/admin/editmovies';
+  const url = 'https://movieflix-server.onrender.com/admin/editmovies';
   try {
     const response = await axios.post(url, editData, {
       headers: { Authorization: `Bearer ${token}` },
@@ -158,7 +158,7 @@ export async function editMovies(editData: any, token: any) {
 //Function For getting Shows
 export const getShows = async (token: string) => {
   try {
-    const response = await axios.get('http://localhost:9000/admin/getshows', {
+    const response = await axios.get('https://movieflix-server.onrender.com/admin/getshows', {
       headers: { 'Authorization': `Bearer ${token}` },
     });
     return response.data;
@@ -170,7 +170,7 @@ export const getShows = async (token: string) => {
 
 //Function For deleting a Show 
 export const deleteShow = async (id: string, token: string) => {
-  const url = `http://localhost:9000/admin/deleteshow/${id}`;
+  const url = `https://movieflix-server.onrender.com/admin/deleteshow/${id}`;
   
   if (!token) {
     throw new Error("Token is required for authentication");
@@ -195,7 +195,7 @@ export const getTheatre = async (theatreId: string, token: string) => {
   }
 
   try {
-    const response = await axios.get(`http://localhost:9000/admin/gettheatre/${theatreId}`, {
+    const response = await axios.get(`https://movieflix-server.onrender.com/admin/gettheatre/${theatreId}`, {
       headers: { 'Authorization': `Bearer ${token}` },
     });
     return response.data; // Return the theatre data
@@ -212,7 +212,7 @@ export const addShow = async (showData: any, token: string) => {
   }
 
   try {
-    const response = await axios.post('http://localhost:9000/admin/addshows', showData, {
+    const response = await axios.post('https://movieflix-server.onrender.com/admin/addshows', showData, {
       headers: { 'Authorization': `Bearer ${token}` },
     });
     return response.data; // Return the response data
@@ -225,7 +225,7 @@ export const updateMovieInfo = async (movieId: string, formData: FormData, token
   try {
     console.log("Function Called")
     console.log(movieId,formData,token)
-    const response = await axios.post(`http://localhost:9000/admin/updatemovie/${movieId}`, formData, {
+    const response = await axios.post(`https://movieflix-server.onrender.com/admin/updatemovie/${movieId}`, formData, {
       headers: {
         Authorization: `Bearer ${token}`,
         'Content-Type': 'multipart/form-data',
