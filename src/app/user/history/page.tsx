@@ -35,7 +35,7 @@ function History() {
 
   useEffect(() => {
     const userid = userProfile.userid//taking userid from redux
-    const url = 'http://localhost:9000/user/gethistory'
+    const url = 'https://movieflix-server.onrender.com/user/gethistory'
     axios.get(url, { params: { userid }, headers: { 'Authorization': `Bearer ${token}` } })
       .then(res => {
         console.log(res.data)

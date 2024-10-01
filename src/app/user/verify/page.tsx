@@ -15,7 +15,7 @@ function Verify() {
   const handleSubmit: React.FormEventHandler<HTMLFormElement> = (e) => {
     e.preventDefault()
     const email = sessionStorage.getItem('email')
-    const url = 'http://localhost:9000/user/verifyotp'
+    const url = 'https://movieflix-server.onrender.com/user/verifyotp'
 
     axios.post(url, { email, otp: otp }).then((res) => {
       if (res.data.status === 1) {

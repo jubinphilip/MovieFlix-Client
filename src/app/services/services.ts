@@ -101,7 +101,7 @@ export const adminLogin = async (data: any) => {
     const response = await axios.post('https://movieflix-server.onrender.com/admin/login', data);
     return response.data; // Return the response data
   } catch (error) {
-    throw error; 
+    throw error;  
   }
 };
 //Adds Theatre
