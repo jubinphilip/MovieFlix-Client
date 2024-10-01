@@ -2,7 +2,7 @@
 import React, { useState } from 'react'
 import axios from 'axios'
 import { useRouter } from 'next/navigation'
-import styles from './Verify.module.css'
+import styles from './verify.module.css'
 
 function Verify() {
   const [otp, setOtp] = useState('')

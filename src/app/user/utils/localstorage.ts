@@ -1,3 +1,4 @@
+'use client'
 export const saveState=(state:any)=>{
     try{
         const serializedState=JSON.stringify(state);
