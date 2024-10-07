@@ -2,8 +2,11 @@
 
 .container {
   padding: 20px;
-  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
   background-color: #f9f9f9;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
 }
 
 .heading {
@@ -13,7 +16,7 @@
 }
 
 .searchInput {
-  width: 100%;
+  width: 60%;
   padding: 10px;
   font-size: 1rem;
   border: 1px solid #ddd;
@@ -21,7 +24,9 @@
   margin-bottom: 20px;
   box-sizing: border-box;
 }
-
+.theatreContainer{
+  width: 60%;
+}
 .theatreItem {
   border: 1px solid #ddd;
   border-radius: 10px;

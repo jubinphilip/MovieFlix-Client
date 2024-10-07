@@ -5,9 +5,9 @@ import { useDispatch } from 'react-redux';
 import { setTicketDetails } from '../../Redux/Feautures/user/ticketSlice';
 import SelectSeats from '../../Components/selectSeats';
 import { useRouter } from 'next/navigation';
-import { ToastContainer,toast } from 'react-toastify';
+import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import './showtheatre.css'; 
+import styles from './showtheatre.module.css'; 
 import { fetchImages, getShowTheatre } from '@/app/services/services';
 
 interface BookTicketProps {
@@ -31,10 +31,10 @@ interface Movie {
     theatreloc: string;
     theatrename: string;
     ticketprice: string;
-    seats:string
+    seats: string;
   }
   timing: string;
-  remaining_seats:string;
+  remaining_seats: string;
   updatedAt: string;
 }
 
@@ -43,9 +43,9 @@ const ShowTheatres: React.FC<BookTicketProps> = ({ params }) => {
   const [theatresWithMovies, setTheatresWithMovies] = useState<Movie[]>([]); //State for getting theatres which run that movie
   const [filteredMovies, setFilteredMovies] = useState<Movie[]>([]); //state for filtering movie with date and time
   const [date, setDate] = useState<string>(''); //stores date
-  const[selectSeat,setSelectSeat]=useState(false)
+  const [selectSeat, setSelectSeat] = useState(false)
   const [selectedTime, setSelectedTime] = useState<string>(''); //stores selected time
-  const timings = ['10.30 AM', '1.00 PM', '4.30 PM', '7.30 PM', '10.00 PM']
+  const timings = ['10.30 AM', '1.00 PM', '4.30 PM', '7.30 PM', '10.00 PM'];
   const router = useRouter();
   const dispatch = useDispatch();
 
@@ -53,14 +53,13 @@ const ShowTheatres: React.FC<BookTicketProps> = ({ params }) => {
     const fetchMovies = async () => {
       try {
         const data = await getShowTheatre(movieId); //Getting theatres with that movie 
-        setTheatresWithMovies(data);  
+        setTheatresWithMovies(data);
       } catch (error) {
         console.error('Error fetching movies:', error);
       }
     };
     fetchMovies();
   }, [movieId]);
-  
 
   useEffect(() => {
     if (date || selectedTime) {
@@ -104,21 +103,21 @@ const ShowTheatres: React.FC<BookTicketProps> = ({ params }) => {
     } else {
       //All these informations are stored in the redux state and then is routed to next page
       dispatch(setTicketDetails({ movieId, theatreId, timing, showId, showdate: date }));
-      setSelectSeat(true)
+      setSelectSeat(true);
     }
   }
 
   return (
-    <div className="show-theatres-container">
-      { selectSeat && <SelectSeats/>}
-      <ToastContainer/>
-      <form onSubmit={handleDate} className="date-form">
+    <div className={styles.showTheatresContainer}>
+      {selectSeat && <SelectSeats />}
+      <ToastContainer />
+      <form onSubmit={handleDate} className={styles.dateForm}>
         <h2>Choose a Date and Time</h2>
-        <label htmlFor='movie-date'>Choose a date:</label>
-        <input type="date" id='movie-date' name='movie-date' value={date} onChange={handleDateChange} />
-        
-        <label htmlFor='movie-time'>Select Timing:</label>
-        <select id='movie-time' name="timing" value={selectedTime} onChange={handleTimeChange}>
+        <label htmlFor="movie-date">Choose a date:</label>
+        <input type="date" id="movie-date" name="movie-date" value={date} onChange={handleDateChange} />
+
+        <label htmlFor="movie-time">Select Timing:</label>
+        <select id="movie-time" name="timing" value={selectedTime} onChange={handleTimeChange}>
           <option value="">Select a timing</option>
           {/* mapping through the array of timings and selects a timing for show */}
           {timings.map((timing, index) => (
@@ -128,17 +127,17 @@ const ShowTheatres: React.FC<BookTicketProps> = ({ params }) => {
       </form>
 
       <h1>Theatres</h1>
-      <ul className="theatre-list">
+      <ul className={styles.theatreList}>
         {/* mapping through the movies */}
         {filteredMovies.length > 0 ? filteredMovies.map((movie) => (
-          <li key={movie._id} className="theatre-item">
+          <li key={movie._id} className={styles.theatreItem}>
             <img src={fetchImages(movie.movie_id.poster)} alt={movie.movie_id.title} />
-            <div className="theatre-item-content">
+            <div className={styles.theatreItemContent}>
               <h2>{movie.movie_id.title}</h2>
               <p><strong>Language:</strong> {movie.movie_id.language}</p>
               <p style={{ color: Number(movie.remaining_seats) < 25 ? 'red' : Number(movie.remaining_seats) < 50 ? 'yellow' : '' }}>
-    <strong>Seats:</strong> {movie.remaining_seats}
-</p>
+                <strong>Seats:</strong> {movie.remaining_seats}
+              </p>
 
               <p><strong>Theatre:</strong> {movie.theatre_id.theatrename}</p>
               <p><strong>Location:</strong> {movie.theatre_id.theatreloc}</p>

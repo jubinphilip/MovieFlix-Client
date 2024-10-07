@@ -65,6 +65,7 @@ function Theatres() {
         value={search}
         onChange={(e) => setSearch(e.target.value)}
       />
+      <div className={styles.theatreContainer}>
       {filteredTheatres.length > 0 ? (
         filteredTheatres.map((theatre) => (
           <div key={theatre._id} className={styles.theatreItem}>
@@ -113,6 +114,7 @@ function Theatres() {
       ) : (
         <p>No theatres found for the given location.</p>
       )}
+      </div>
     </div>
   );
 }

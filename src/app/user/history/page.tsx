@@ -3,7 +3,7 @@ import React, { useEffect, useState } from 'react'
 import { useSelector } from 'react-redux'
 import { RootState } from '../Redux/store'
 import axios from 'axios'
-import './history.css'
+import styles from './history.module.css' 
 import { fetchImages } from '@/app/services/services'
 
 interface History {
@@ -27,14 +27,14 @@ interface History {
     timing: string;
   }
 }
-//This page loads the history of ticket bookings by the user
+
 function History() {
   const userProfile = useSelector((state: RootState) => state.user)
   const [history, setHistory] = useState<History[]>([])
   const token = userProfile.token
 
   useEffect(() => {
-    const userid = userProfile.userid//taking userid from redux
+    const userid = userProfile.userid //taking userid from redux
     const url = 'http://localhost:9000/user/gethistory'
     axios.get(url, { params: { userid }, headers: { 'Authorization': `Bearer ${token}` } })
       .then(res => {
@@ -47,21 +47,20 @@ function History() {
   }, [userProfile.userid])
 
   return (
-    <div className="history-container">
+    <div className={styles.historyContainer}>
       <h1>Booking History</h1>
-      {/* mapping through the history array */}
       {history.map((item) => (
-        <div key={item._id} className="history-item">
-          <img className="movie_image" src={fetchImages(item.movieid.poster)} alt={item.movieid.title} />
-          <div className="history-item-details">
+        <div key={item._id} className={styles.historyItem}>
+          <img className={styles.movieImage} src={fetchImages(item.movieid.poster)} alt={item.movieid.title} />
+          <div className={styles.historyItemDetails}>
             <h2>{item.movieid.title}</h2>
-            <p className="details">Language: {item.movieid.language}</p>
-            <p className="details">Seats Booked: {item.bookedSeats.join(', ')}</p>
-            <p className="details">Theatre: {item.theatreid.theatrename}</p>
-            <p className="details">Ticket Price: {item.theatreid.ticketprice}</p>
-            <p className="details">Show Time: {item.showid?.timing}</p>
-            <p className="amount">Amount: {item.amount}</p>
-            <p className="details">Booking Date: {item.booked_date}</p>
+            <p className={styles.details}>Language: {item.movieid.language}</p>
+            <p className={styles.details}>Seats Booked: {item.bookedSeats.join(', ')}</p>
+            <p className={styles.details}>Theatre: {item.theatreid.theatrename}</p>
+            <p className={styles.details}>Ticket Price: {item.theatreid.ticketprice}</p>
+            <p className={styles.details}>Show Time: {item.showid?.timing}</p>
+            <p className={styles.amount}>Amount: {item.amount}</p>
+            <p className={styles.details}>Booking Date: {item.booked_date}</p>
           </div>
         </div>
       ))}
