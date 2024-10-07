@@ -217,8 +217,8 @@ const handleSubmit: React.FormEventHandler<HTMLFormElement> = async (e) => {
                     className="show-poster"
                   />
                   <div className="show-info">
-                    <h2>{show.movie_id.title}</h2>
-                    <p>Theatre: {show.theatre_id.theatrename}</p>
+                    <h2>{show?.movie_id?.title}</h2>
+                    <p>Theatre: {show?.theatre_id?.theatrename}</p>
                     <p>Showtime: {show.timing}</p>
                     <p>Seats Available: {show.seats}</p>
                     <RiDeleteBin2Fill className="delete-icon" onClick={() => manageShow(show._id)} />

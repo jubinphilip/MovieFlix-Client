@@ -8,6 +8,7 @@
 
 /* Slides Container */
 .slides {
+    margin-top: 100px;
     display: flex;
     transition: transform 0.5s ease-in-out;
     height: 100%;
@@ -22,7 +23,7 @@
 }
 
 /* Show the current slide */
-.slide.show {
+.show {
     display: block;
 }
 
@@ -42,9 +43,9 @@
     color: white;
     text-align: center;
     padding: 20px;
-    border-radius: 10px; /* Rounded corners */
-    background: rgba(24, 23, 23, 0.5); /* Semi-transparent background */
-    width: 80%; /* Adjust width as needed */
+    border-radius: 10px;
+    background: rgba(24, 23, 23, 0.5);
+    width: 80%;
 }
 
 /* Heading in Overlay */
@@ -54,8 +55,8 @@
 }
 
 /* Special Heading Styling */
-#main {
-    font-size: 100px; /* Special size for main heading */
+.main {
+    font-size: 100px;
 }
 
 /* Paragraph in Overlay */
@@ -76,18 +77,18 @@
     font-size: 18px;
     cursor: pointer;
     user-select: none;
-    background-color: rgba(0, 0, 0, 0.5); /* Semi-transparent background */
+    background-color: rgba(0, 0, 0, 0.5);
     border: none;
     border-radius: 3px;
-    z-index: 2; /* Ensure arrows are visible above the overlay */
+    z-index: 2;
 }
 
 /* Previous Arrow */
 .prev {
-    left: 10px; /* Spacing from the left */
+    left: 10px;
 }
 
 /* Next Arrow */
 .next {
-    right: 10px; /* Spacing from the right */
+    right: 10px;
 }

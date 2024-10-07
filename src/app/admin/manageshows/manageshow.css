@@ -7,6 +7,7 @@
   }
   
   .add-show-form {
+    margin-top: 100px;
     background-color: #f9f9f9;
     padding: 20px;
     border-radius: 8px;
@@ -15,6 +16,7 @@
   }
   
   .add-show-form h1 {
+
     margin-bottom: 20px;
     font-size: 1.8rem;
     color: #333;

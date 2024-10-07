@@ -90,7 +90,7 @@ const ShowTheatres: React.FC<BookTicketProps> = ({ params }) => {
   const handleDate: React.FormEventHandler<HTMLFormElement> = (e) => {
     e.preventDefault();
   };
-
+console.log(filteredMovies)
   //function for handling booking tickets before booking the user needs to select a date and time
   function handleClick(movieId: string, theatreId: string, timing: string, showId: string) {
     const currentDate = new Date();
@@ -129,19 +129,19 @@ const ShowTheatres: React.FC<BookTicketProps> = ({ params }) => {
       <h1>Theatres</h1>
       <ul className={styles.theatreList}>
         {/* mapping through the movies */}
-        {filteredMovies.length > 0 ? filteredMovies.map((movie) => (
+        {filteredMovies?.length > 0 ? filteredMovies.map((movie) => (
           <li key={movie._id} className={styles.theatreItem}>
             <img src={fetchImages(movie.movie_id.poster)} alt={movie.movie_id.title} />
             <div className={styles.theatreItemContent}>
               <h2>{movie.movie_id.title}</h2>
               <p><strong>Language:</strong> {movie.movie_id.language}</p>
-              <p style={{ color: Number(movie.remaining_seats) < 25 ? 'red' : Number(movie.remaining_seats) < 50 ? 'yellow' : '' }}>
+              <p style={{ color: Number(movie?.remaining_seats) < 25 ? 'red' : Number(movie?.remaining_seats) < 50 ? 'yellow' : '' }}>
                 <strong>Seats:</strong> {movie.remaining_seats}
               </p>
 
-              <p><strong>Theatre:</strong> {movie.theatre_id.theatrename}</p>
-              <p><strong>Location:</strong> {movie.theatre_id.theatreloc}</p>
-              <p><strong>Ticket Price:</strong> {movie.theatre_id.ticketprice}</p>
+              <p><strong>Theatre:</strong> {movie?.theatre_id?.theatrename}</p>
+              <p><strong>Location:</strong> {movie?.theatre_id?.theatreloc}</p>
+              <p><strong>Ticket Price:</strong> {movie?.theatre_id?.ticketprice}</p>
               <p><strong>Timing:</strong> {movie.timing}</p>
               <p><strong>From Date:</strong> {new Date(movie.from_date).toLocaleDateString()}</p>
               <p><strong>To Date:</strong> {new Date(movie.to_date).toLocaleDateString()}</p>

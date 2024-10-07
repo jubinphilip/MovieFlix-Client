@@ -1,7 +1,7 @@
 'use client';
 
 import React, { useEffect, useState } from 'react';
-import './slider.css'; // Import the CSS file
+import styles from './slider.module.css'; 
 
 type Slide = {
     id: number;
@@ -11,11 +11,12 @@ type Slide = {
 };
 
 const slidesData: Slide[] = [
-    { id: 1, image: '/assets/marvel.jpg', title: 'Watch New Movies', description: 'With Exiting Offers.' },
+    { id: 1, image: '/assets/marvel.jpg', title: 'Watch New Movies', description: 'With Exciting Offers.' },
     { id: 2, image: '/assets/deadvswol.jpg', title: 'Deadpool vs Wolverine', description: '' },
     { id: 3, image: '/assets/aavesham.jpg', title: 'Aavesham', description: '' },
-    { id: 4, image: '/assets/inside.jpg', title: 'Inside Out 2', description: ''}
-]
+    { id: 4, image: '/assets/inside.jpg', title: 'Inside Out 2', description: '' }
+];
+
 const Slider: React.FC = () => {
     const [slideIndex, setSlideIndex] = useState<number>(0);
 
@@ -36,23 +37,23 @@ const Slider: React.FC = () => {
 
     return (
         <section>
-            <div className="slider">
-                <div className="slides">
+            <div className={styles.slider}>
+                <div className={styles.slides}>
                     {slidesData.map((slide, index) => (
                         <div
-                            className={`slide fade ${index === slideIndex ? 'show' : ''}`}
+                            className={`${styles.slide} ${index === slideIndex ? styles.show : ''}`}
                             key={slide.id}
                         >
                             <img src={slide.image} alt={slide.title} />
-                            <div className="overlay">
-                                <h2 id={slide.title === 'EXPLORE' ? 'main' : ''}>{slide.title}</h2>
+                            <div className={styles.overlay}>
+                                <h2 id={slide.title === 'EXPLORE' ? styles.main : ''}>{slide.title}</h2>
                                 <p>{slide.description}</p>
                             </div>
                         </div>
                     ))}
                 </div>
-                <a className="prev" onClick={() => plusSlides(-1)}>&#10094;</a>
-                <a className="next" onClick={() => plusSlides(1)}>&#10095;</a>
+                <a className={styles.prev} onClick={() => plusSlides(-1)}>&#10094;</a>
+                <a className={styles.next} onClick={() => plusSlides(1)}>&#10095;</a>
             </div>
         </section>
     );

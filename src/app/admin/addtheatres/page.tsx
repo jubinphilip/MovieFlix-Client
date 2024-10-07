@@ -1,7 +1,7 @@
 'use client';
 import React, { useEffect, useState } from 'react';
 import './addtheatres.css'; 
-import { toast,ToastContainer} from 'react-toastify';
+import { toast, ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { addTheatre, editMovies, fetchLocalMovies, fetchTheatres } from '@/app/services/services';
 
@@ -21,95 +21,95 @@ function Addtheatres() {
   const [theatres, setTheatre] = useState<Theatre[]>([]);
   const [editData, setEditdata] = useState({});
   const [token, setToken] = useState('');
+  const[showEdit,setShowEdit]=useState(false)
 
   useEffect(() => {
-    const token = sessionStorage.getItem('adminToken');//Taking token from sesssion
+    const token = sessionStorage.getItem('adminToken'); // Taking token from session
     setToken(token ? token : '');
-    
-    //Fetching already existing movies from the database
+
+    // Fetching already existing movies from the database
     const fetchMovies = async () => {
-      try
-      {
-      const res = await fetchLocalMovies('admin')
-      console.group("Localmovies",res)
-      setMovies(res);
-      }
-      catch(error)
-      {
+      try {
+        const res = await fetchLocalMovies('admin');
+        console.group("Localmovies", res);
+        setMovies(res);
+      } catch (error) {
         console.error(error);
       }
     };
 
-    //Fetching  thetares from database
+    // Fetching theatres from database
     const getTheatres = async () => {
-      try
-    {
-      const res = await fetchTheatres()
-     setTheatre(res);
-    }
-    catch(error)
-    {
-      console.log(error)
-    }
+      try {
+        const res = await fetchTheatres();
+        setTheatre(res);
+      } catch (error) {
+        console.log(error);
+      }
     };
+
     fetchMovies();
     getTheatres();
   }, []);
 
- //Function for setting thetare values 
+  // Function for setting theatre values 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
     const { name, value } = e.target as HTMLInputElement | HTMLSelectElement;
     setData((prev) => ({ ...prev, [name]: value }));
   };
 
-  //Function for setting edited values
-
+  // Function for setting edited values
   const handleEditChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
     const { name, value } = e.target;
     setEditdata((prev) => ({ ...prev, [name]: value }));
   };
-//Function for editing currently running movies
-const handleEdit = async (e: React.FormEvent<HTMLFormElement>) => {
-  e.preventDefault();
-  console.log(editData);
 
-  try {
-    const res = await editMovies(editData, token);  // Call the API service for editig movies
+  // Function for editing currently running movies
+  const handleEdit = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    console.log(editData);
 
-    if (res && res.status === 200) {
-      toast.success(res.data.message || 'Movie updated successfully');
-    } else if (res) {
-      toast.error(res.data.error || 'An error occurred while editing the movie');
-    } else {
-      toast.error('No response from server');
+    try {
+      const res = await editMovies(editData, token);  // Call the API service for editing movies
+
+      if (res && res.status === 200) {
+        toast.success(res.data.message || 'Movie updated successfully');
+      } else if (res) {
+        toast.error(res.data.error || 'An error occurred while editing the movie');
+      } else {
+        toast.error('No response from server');
+      }
+    } catch (err) {
+      console.error("An unexpected error occurred:", err);
+      toast.error('An unexpected error occurred');
     }
-  } catch (err) {
-    console.error("An unexpected error occurred:", err);
-    toast.error('An unexpected error occurred');
-  }
-};
+  };
 
-//Function for adding the theatre
+  // Function for adding the theatre
   const handleSubmit: React.FormEventHandler<HTMLFormElement> = async (e) => {
     e.preventDefault();
-    //Calling Api service
-    const res=await addTheatre(data,token)
-      if(res.status===200)
-      {
-        toast.success(res.data.message)
-      }
-      else
-      {
-        toast.error(res.data.error)
-      }
-    
+    // Calling API service
+    try
+    {
+    const res = await addTheatre(data, token);
+    if (res.status === 200) {
+      toast.success(res.data.message);
+    } else {
+      toast.error(res.data.error);
+    }
+  }catch (error: any) {
+    if (error.response) {
+      console.error('Error response from server:', error.response.data);
+      toast.error(error.response.data.message);
+    } else {
+      console.error('Error setting up request:', error.message);
+      toast.error('An unexpected error occurred.');
+    }
   }
-
-
-
+  }
   return (
     <div className="container">
-      <ToastContainer/>
+      <ToastContainer />
       <div className="form-container">
         <form onSubmit={handleSubmit} className="theatre-form">
           <h1>Add Theatres</h1>
@@ -132,20 +132,19 @@ const handleEdit = async (e: React.FormEvent<HTMLFormElement>) => {
           <div className="form-group">
             <label>Select Movies:</label>
             <div className="select-group">
-              <select name="movie1" onChange={handleChange}>
-                <option value="">Select a movie</option>
-                {/*Mapping through the movies array for displaying it in the dropdown */}
-                {movies && movies.map((movie) => (
-                  <option key={movie._id} value={movie._id}>{movie.title}</option>
-                ))}
-              </select>
-              <select name="movie2" onChange={handleChange}>
+              <select name="movie1" className="movie-select" onChange={handleChange}>
                 <option value="">Select a movie</option>
                 {movies && movies.map((movie) => (
                   <option key={movie._id} value={movie._id}>{movie.title}</option>
                 ))}
               </select>
-              <select name="movie3" onChange={handleChange}>
+              <select name="movie2" className="movie-select" onChange={handleChange}>
+                <option value="">Select a movie</option>
+                {movies && movies.map((movie) => (
+                  <option key={movie._id} value={movie._id}>{movie.title}</option>
+                ))}
+              </select>
+              <select name="movie3" className="movie-select" onChange={handleChange}>
                 <option value="">Select a movie</option>
                 {movies && movies.map((movie) => (
                   <option key={movie._id} value={movie._id}>{movie.title}</option>
@@ -155,14 +154,14 @@ const handleEdit = async (e: React.FormEvent<HTMLFormElement>) => {
           </div>
           <button type="submit" className="submit-button">Add Theatre</button>
         </form>
+       {!showEdit && <button  className="submit-button" onClick={()=>setShowEdit(true)}>Edit Theatre Information</button>}
 
-        <form onSubmit={handleEdit} className="edit-form">
-          <h1>Edit Movies</h1>
+        { showEdit && <form onSubmit={handleEdit} className="edit-form">
+          <h1>Edit Now Running Movies</h1>
           <div className="form-group">
             <label>Select Theatre:</label>
-            <select name="theatrename" onChange={handleEditChange}>
+            <select name="theatrename" className="theatre-select" onChange={handleEditChange}>
               <option value="">Select a theatre</option>
-                  {/*Mapping through the theatres array for displaying it in the dropdown */}
               {theatres.map((theatre) => (
                 <option key={theatre._id} value={theatre.theatrename}>{theatre.theatrename}</option>
               ))}
@@ -171,19 +170,19 @@ const handleEdit = async (e: React.FormEvent<HTMLFormElement>) => {
           <div className="form-group">
             <label>Select Movies:</label>
             <div className="select-group">
-              <select name="movie1" onChange={handleEditChange}>
+              <select name="movie1" className="movie-select" onChange={handleEditChange}>
                 <option value="">Select a movie</option>
                 {movies && movies.map((movie) => (
                   <option key={movie._id} value={movie._id}>{movie.title}</option>
                 ))}
               </select>
-              <select name="movie2" onChange={handleEditChange}>
+              <select name="movie2" className="movie-select" onChange={handleEditChange}>
                 <option value="">Select a movie</option>
                 {movies && movies.map((movie) => (
                   <option key={movie._id} value={movie._id}>{movie.title}</option>
                 ))}
               </select>
-              <select name="movie3" onChange={handleEditChange}>
+              <select name="movie3" className="movie-select" onChange={handleEditChange}>
                 <option value="">Select a movie</option>
                 {movies && movies.map((movie) => (
                   <option key={movie._id} value={movie._id}>{movie.title}</option>
@@ -192,7 +191,7 @@ const handleEdit = async (e: React.FormEvent<HTMLFormElement>) => {
             </div>
           </div>
           <button type="submit" className="submit-button">Submit Data</button>
-        </form>
+        </form>}
       </div>
     </div>
   );

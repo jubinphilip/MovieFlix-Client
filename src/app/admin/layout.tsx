@@ -3,6 +3,7 @@
 import Navbar from './components/Navbar' 
 import { usePathname } from 'next/navigation';
 
+
 export default function RootLayout({
   children,
 }: {

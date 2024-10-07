@@ -24,6 +24,7 @@ const router=useRouter()
       <nav className="navbar">
         <h1 className="navbar-header">MovieFlix Admin Panel</h1>
         <ul className="navbar-menu">
+        <li><a href="/admin/adminhome">Home</a></li>
           <li><a href="/admin/addmovies">Add Movies</a></li>
           <li><a href="/admin/addtheatres">Add Theatres</a></li>
           <li><a href="/admin/manageshows">Manage Shows</a></li>

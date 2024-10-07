@@ -18,6 +18,7 @@ type Data = {
 function Signin() {
   const dispatch = useDispatch();
   const [data, setData] = useState<Data>({} as Data);
+  const[error,setError]=useState('')
   const router = useRouter();
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -45,10 +46,11 @@ function Signin() {
           sessionStorage.setItem('username', res.data.data.username);
           router.push('/user/userhome');
         } else {
-          toast.error(res.data.message);
+          setError(res.data.message)  
         }
       });
     } catch (err) {
+      setError("Error Occured")
       toast.error("An Unexpected error occurred");
     }
   };
@@ -73,6 +75,7 @@ function Signin() {
             onChange={handleChange}
             className={styles.signinInput}
           />
+        {error && <span className={styles.error}>Login Failed Invalid credentials</span>}
           <button type="submit" className={styles.signinButton}>
             Sign In
           </button>

@@ -15,6 +15,7 @@ type Data = {
 
 function Admin() {
   const [data, setData] = useState<Data>({} as Data);
+  const[error,setError]=useState(false)
   const router = useRouter();
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -23,8 +24,6 @@ function Admin() {
 
   const handleSubmit: React.FormEventHandler<HTMLFormElement> = async (e) => {
     e.preventDefault();
-  
-    console.log(data);
     
     try {
       const res = await adminLogin(data);
@@ -32,7 +31,7 @@ function Admin() {
       router.push('/admin/adminhome');
     } catch (error) {
       console.error('Error during login:', error);
-      toast.error('Login failed. Please check your credentials.');
+     setError(true)
     }
   };
 
@@ -57,6 +56,7 @@ function Admin() {
           onChange={handleChange}
           className={styles.adminLoginInput}
         />
+        {error && <span className={styles.error}>Login Failed Invalid credentials</span>}
         <button type="submit" className={styles.adminLoginButton}>Login</button>
       </form>
     </div>
