@@ -31,7 +31,7 @@ function Userhome() {
   const [rating, setRating] = useState<number | undefined>(undefined);
   const [movieId, setMovieId] = useState<string | number | undefined>();
   const [tmdbMovie, settmdbMovie] = useState(false);
-
+  let user:string | null=''
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -62,8 +62,12 @@ function Userhome() {
     };
   }, [movieInfo, tmdbMovie]);
 
-  const user = sessionStorage.getItem('username');
-  console.log(movies);
+  useEffect(() => {
+     user = sessionStorage.getItem('username');
+  }, []);
+  
+
+
 
   const handleMovieClick = (id: string) => {
     setMovieinfo(!movieInfo);
