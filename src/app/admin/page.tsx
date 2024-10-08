@@ -26,6 +26,7 @@ function Admin() {
     e.preventDefault();
  if (!data.email || !data.password) {
   setError("Email and Password Cannot be Empty");
+   return
 }
 
     try {
