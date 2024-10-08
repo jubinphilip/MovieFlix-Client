@@ -15,7 +15,7 @@ type Data = {
 
 function Admin() {
   const [data, setData] = useState<Data>({} as Data);
-  const[error,setError]=useState('')
+  const [error, setError] = useState<string | null>(null);
   const router = useRouter();
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
