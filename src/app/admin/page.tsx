@@ -24,7 +24,7 @@ function Admin() {
 
   const handleSubmit: React.FormEventHandler<HTMLFormElement> = async (e) => {
     e.preventDefault();
- if (!email || !password) {
+ if (!data.email || !data.password) {
   setError("Email and Password Cannot be Empty");
 }
 
