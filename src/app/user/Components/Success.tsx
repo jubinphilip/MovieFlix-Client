@@ -17,7 +17,7 @@ const Success: React.FC<SuccessProps> = ({ id,show }) => {
 
   const handleClick = async () => {
     try {
-      const url = 'http://localhost:9000/user/getticket'; // Change to your actual endpoint
+      const url = 'https://movieflix-server.onrender.com/user/getticket'; // Change to your actual endpoint
       const response = await axios.post(url, { id: id }, {
         headers: {
           'Authorization': `Bearer ${token}`
