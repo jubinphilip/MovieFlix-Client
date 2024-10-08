@@ -8,6 +8,7 @@ import 'react-toastify/dist/ReactToastify.css';
 import { useRouter } from 'next/navigation';
 function Signup() {
   const [data, setData] = useState({});
+  const[error,setError]=useState('')
   const router=useRouter()
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setData((prev) => ({ ...prev, [e.target.name]: e.target.value }));
@@ -29,7 +30,7 @@ function Signup() {
     } catch (error) {
       if (axios.isAxiosError(error)) {
         if (error.response && error.response.status === 400) {
-          toast.error(`Registration failed: ${error.response.data.message}`);
+          setError(error.response.data.message)
         } else if (error.request) {
           toast.error('No response from the server.');
         } 
@@ -85,6 +86,7 @@ function Signup() {
               onChange={handleChange}
             />
           </div>
+          {error && <p className={styles.error}>{error}</p>}
           <button type="submit" className={styles.signupButton}>
             Sign Up
           </button>

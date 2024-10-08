@@ -107,6 +107,8 @@ const EditMovie: React.FC<EditMovieProps> = ({ movieId, movieState }) => {
 
   if (!movieState || !movieData) return null;
 
+
+
   return (
     <div className={styles.overlay}>
       <div className={styles.modal}>
@@ -135,13 +137,13 @@ const EditMovie: React.FC<EditMovieProps> = ({ movieId, movieState }) => {
           <label className={styles.label}>Actor:</label>
           <input type="text" name="actor" defaultValue={movieData.cast.actor} placeholder={movieData.cast.actor} className={styles.input} />
           <label className={styles.label}>Actor Image:</label>
-          <img src={actorPreview || fetchImages(movieData.actor_image)} alt="Actor" className={styles.imagePreview} />
+          <img src={actorPreview || fetchImages(movieData?.cast?.actor_image)} alt="Actor" className={styles.imagePreview} />
           <input type="file" accept=".jpg,.jpeg,.png,.avif,.webp" onChange={(e) => handleImageChange(e, 'actor')} />
 
           <label className={styles.label}>Actress:</label>
           <input type="text" name="actress" defaultValue={movieData.cast.actress} placeholder={movieData.cast.actress} className={styles.input} />
           <label className={styles.label}>Actress Image:</label>
-          <img src={actressPreview || fetchImages(movieData.actress_image)}  alt="Actress"  className={styles.imagePreview} />
+          <img src={actressPreview || fetchImages(movieData?.cast?.actress_image)}  alt="Actress"  className={styles.imagePreview} />
           <input type="file" accept=".jpg,.jpeg,.png,.avif,.webp" onChange={(e) => handleImageChange(e, 'actress')} />
 
           <label className={styles.label}>Director:</label>
