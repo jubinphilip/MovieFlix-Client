@@ -15,7 +15,7 @@ type Data = {
 
 function Admin() {
   const [data, setData] = useState<Data>({} as Data);
-  const[error,setError]=useState(false)
+  const[error,setError]=useState('')
   const router = useRouter();
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -34,7 +34,7 @@ function Admin() {
       router.push('/admin/adminhome');
     } catch (error) {
       console.error('Error during login:', error);
-     setError(true)
+     setError("Login Failed Invalid Credentials")
     }
   };
 
