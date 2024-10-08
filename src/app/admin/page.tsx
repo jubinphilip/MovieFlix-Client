@@ -1,12 +1,10 @@
 'use client';
-
 import React, { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import styles from './home.module.css'; 
-import { ToastContainer,toast } from 'react-toastify';
+import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { adminLogin } from '../services/services';
-
 
 type Data = {
   email: string;
@@ -22,9 +20,8 @@ function Admin() {
     setData((prev) => ({ ...prev, [e.target.name]: e.target.value }));
   };
 
-const handleSubmit: React.FormEventHandler<HTMLFormElement> = async (e) => {
+  const handleSubmit: React.FormEventHandler<HTMLFormElement> = async (e) => {
     e.preventDefault();
-
     setError(null);
 
     // Check if email or password is empty
@@ -45,29 +42,29 @@ const handleSubmit: React.FormEventHandler<HTMLFormElement> = async (e) => {
 
   return (
     <div className={styles.container}>
-    <div className={styles.adminLoginContainer}>
-    <ToastContainer/>
-      <form onSubmit={handleSubmit} className={styles.adminLoginForm}>
-        <h1 className={styles.adminLoginTitle}>Admin Login</h1>
-        <p className={styles.adminLoginSubtitle}>Please enter your credentials</p>
-        <input
-          type="email"
-          name="email"
-          placeholder="Enter your email"
-          onChange={handleChange}
-          className={styles.adminLoginInput}
-        />
-        <input
-          type="password"
-          name="password"
-          placeholder="Enter your password"
-          onChange={handleChange}
-          className={styles.adminLoginInput}
-        />
-        {error && <span className={styles.error}>Login Failed Invalid credentials</span>}
-        <button type="submit" className={styles.adminLoginButton}>Login</button>
-      </form>
-    </div>
+      <div className={styles.adminLoginContainer}>
+        <ToastContainer/>
+        <form onSubmit={handleSubmit} className={styles.adminLoginForm}>
+          <h1 className={styles.adminLoginTitle}>Admin Login</h1>
+          <p className={styles.adminLoginSubtitle}>Please enter your credentials</p>
+          <input
+            type="email"
+            name="email"
+            placeholder="Enter your email"
+            onChange={handleChange}
+            className={styles.adminLoginInput}
+          />
+          <input
+            type="password"
+            name="password"
+            placeholder="Enter your password"
+            onChange={handleChange}
+            className={styles.adminLoginInput}
+          />
+          {error && <span className={styles.error}>{error}</span>}
+          <button type="submit" className={styles.adminLoginButton}>Login</button>
+        </form>
+      </div>
     </div>
   );
 }
