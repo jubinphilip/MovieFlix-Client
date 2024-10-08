@@ -67,7 +67,7 @@ function ManageShows() {
 
   //Function for getting theatres
   useEffect(() => {
-   token = sessionStorage.getItem('adminToken');
+   const token = sessionStorage.getItem('adminToken');
     setToken(token)
   try{
     const getTheatres=async()=>
