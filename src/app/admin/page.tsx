@@ -22,12 +22,16 @@ function Admin() {
     setData((prev) => ({ ...prev, [e.target.name]: e.target.value }));
   };
 
-  const handleSubmit: React.FormEventHandler<HTMLFormElement> = async (e) => {
+const handleSubmit: React.FormEventHandler<HTMLFormElement> = async (e) => {
     e.preventDefault();
- if (!data.email || !data.password) {
-  setError("Email and Password Cannot be Empty");
-   return
-}
+
+    setError(null);
+
+    // Check if email or password is empty
+    if (!data.email || !data.password) {
+      setError("Email and Password Cannot be Empty");
+      return;
+    }
 
     try {
       const res = await adminLogin(data);
@@ -35,7 +39,7 @@ function Admin() {
       router.push('/admin/adminhome');
     } catch (error) {
       console.error('Error during login:', error);
-     setError("Login Failed Invalid Credentials")
+      setError("Login Failed. Invalid Credentials.");
     }
   };
 
