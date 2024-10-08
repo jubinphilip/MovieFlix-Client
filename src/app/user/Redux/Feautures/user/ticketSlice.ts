@@ -1,3 +1,4 @@
+
 import { createSlice,PayloadAction } from "@reduxjs/toolkit";
 //slice is used for storing the movie booking information of a user
 interface TicketState{

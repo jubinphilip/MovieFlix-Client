@@ -27,7 +27,7 @@ function Signin() {
   const handleSubmit: React.FormEventHandler<HTMLFormElement> = (e) => {
     e.preventDefault();
     try {
-      const url = 'http://localhost:9000/user/login';
+      const url = 'https://movieflix-server.onrender.com/user/login';
       axios.post(url, data).then((res) => {
         if (res.data.status === 1) {
           toast.success(res.data.message);
@@ -81,7 +81,7 @@ function Signin() {
               onSuccess={(credentialResponse) => {
                 console.log(credentialResponse.credential);
                 const credential = credentialResponse.credential;
-                const url = 'http://localhost:9000/user/login';
+                const url = 'https://movieflix-server.onrender.com/user/login';
                 axios
                   .post(url, { credential: credential })
                   .then((res) => {

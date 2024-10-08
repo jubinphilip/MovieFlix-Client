@@ -17,10 +17,12 @@ function Home() {
   const [data, setData] = useState<Movie[]>([]);
   const [isedit,setIsedit]=useState(false)
   const[movieId,setMovieId]=useState('')
-  const token = sessionStorage.getItem('adminToken');
+
+  let token:string |null=''
 
   useEffect(() => {
     //Function for getting all movies
+    const token=sessionStorage.getItem('adminToken');
     const fetchData = async () => {
      //calling service for getting movies list
       const res = await fetchLocalMovies('admin')

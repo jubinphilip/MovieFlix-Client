@@ -16,7 +16,7 @@ function Signup() {
   const handleSubmit: React.FormEventHandler<HTMLFormElement> = async (e) => {
     e.preventDefault();
     console.log(data);
-    const url = 'http://localhost:9000/user/register';
+    const url = 'https://movieflix-server.onrender.com/user/register';
     try {
       const res = await axios.post(url, data);
       console.log(res.data);  

@@ -169,7 +169,7 @@ function Layout() {
       };
 
       const token = userProfile.token;
-      const url = "http://localhost:9000/user/payment";
+      const url = "https://movieflix-server.onrender.com/user/payment";
       const response = await axios.post(url, content, {
         headers: {
           'Authorization': `Bearer ${token}`
@@ -197,7 +197,7 @@ function Layout() {
             };
 
             // Verify the payment on the backend
-            const verify = await axios.post('http://localhost:9000/user/verifyPayment', paymentData, {
+            const verify = await axios.post('https://movieflix-server.onrender.com/user/verifyPayment', paymentData, {
               headers: {
                 'Authorization': `Bearer ${token}`
               }
@@ -205,7 +205,7 @@ function Layout() {
 
             if (verify.data.state === true) {
               toast.success("Payment Success")
-              const url = 'http://localhost:9000/user/booking';
+              const url = 'https://movieflix-server.onrender.com/user/booking';
               axios.post(url, record, {
                 headers: {
                   'Authorization': `Bearer ${token}`

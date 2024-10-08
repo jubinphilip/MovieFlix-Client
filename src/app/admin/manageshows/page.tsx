@@ -45,7 +45,7 @@ function ManageShows() {
   const [movies, setMovies] = useState<Movie[]>([]);
   const [showData, setShowData] = useState<ShowData>({} as ShowData);
   const [shows, setShows] = useState<Shows[]>([]);
-  const token = sessionStorage.getItem('adminToken');
+let token:string|null=''
 
   //Function for fetching shows
   const fetchShows = async () => {
@@ -67,6 +67,7 @@ function ManageShows() {
 
   //Function for getting theatres
   useEffect(() => {
+   token = sessionStorage.getItem('adminToken');
   try{
     const getTheatres=async()=>
     {
