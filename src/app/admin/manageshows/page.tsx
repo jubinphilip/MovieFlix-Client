@@ -22,7 +22,10 @@ type ShowData = {
   movie_id: string;
   timing: string;
   seats: number;
+  from_date: string; 
+  to_date: string;    
 };
+
 
 type Shows = {
   _id: string;
