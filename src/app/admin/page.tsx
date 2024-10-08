@@ -24,7 +24,10 @@ function Admin() {
 
   const handleSubmit: React.FormEventHandler<HTMLFormElement> = async (e) => {
     e.preventDefault();
-    
+ if (!email || !password) {
+  setError("Email and Password Cannot be Empty");
+}
+
     try {
       const res = await adminLogin(data);
       sessionStorage.setItem('adminToken', res.token);
