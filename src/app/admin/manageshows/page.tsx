@@ -22,6 +22,8 @@ type ShowData = {
   movie_id: string;
   timing: string;
   seats: number;
+    from_date?: string; 
+  to_date?: string;
 };
 
 type Shows = {
@@ -117,6 +119,12 @@ function ManageShows() {
 
   const handleSubmit: React.FormEventHandler<HTMLFormElement> = async (e) => {
     e.preventDefault();
+      const fromDate = new Date(showData.from_date);
+  const toDate = new Date(showData.to_date);
+    if (fromDate > toDate) {
+    toast.error("The 'From Date' cannot be later than the 'To Date'.");
+    return;
+  }
     if (!token) {
       toast.error("Token is not available");
       return;
