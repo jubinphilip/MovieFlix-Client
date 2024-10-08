@@ -68,7 +68,7 @@ function Addmovies() {
       formData.append('actress_image', actressImage);
     }
 
-    const url = 'http://localhost:9000/admin/addmovies';
+    const url = 'https://movieflix-server.onrender.com/admin/addmovies';
 
     try {
       const response = await axios.post(url, formData, {
