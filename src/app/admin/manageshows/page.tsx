@@ -115,25 +115,33 @@ function ManageShows() {
     setShowData((prev) => ({ ...prev, [e.target.name]: e.target.value }));
   };
 
-  const handleSubmit: React.FormEventHandler<HTMLFormElement> = async (e) => {
-    e.preventDefault();
-      
-    if (!token) {
-      toast.error("Token is not available");
-      return;
-    }
+ const handleSubmit: React.FormEventHandler<HTMLFormElement> = async (e) => {
+  e.preventDefault();
+  
+  if (!token) {
+    toast.error("Token is not available");
+    return;
+  }
 
-    try {
-      const response = await addShow(showData, token);
-      if (response) {
-        toast.success(response.message);
-        fetchShows();
-      }
-    } catch (error) {
-      toast.error("An error occurred while adding the show");
-      console.error("Error details:", error);
+  const { from_date, to_date } = showData;
+
+  if (new Date(from_date) >= new Date(to_date)) {
+    toast.error("From Date cannot be equal to or greater than To Date.");
+    return;
+  }
+
+  try {
+    const response = await addShow(showData, token);
+    if (response) {
+      toast.success(response.message);
+      fetchShows();
     }
-  };
+  } catch (error) {
+    toast.error("An error occurred while adding the show");
+    console.error("Error details:", error);
+  }
+};
+
 
   const manageShow = async (id: string) => {
     try {
