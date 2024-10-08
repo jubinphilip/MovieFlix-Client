@@ -2,7 +2,7 @@
 import React, { useEffect, useState, ChangeEvent } from 'react';
 import { RiDeleteBin2Fill } from "react-icons/ri";
 import './manageshow.css'; 
-import { toast,ToastContainer } from 'react-toastify';
+import { toast, ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { addShow, deleteShow, fetchImages, fetchTheatres, getShows, getTheatre } from '@/app/services/services';
 
@@ -40,48 +40,48 @@ type Shows = {
 };
 
 function ManageShows() {
-  const timings = ['10.30 AM', '1.00 PM', '4.30 PM', '7.30 PM', '10.00 PM'];//array which stores timings
+  const timings = ['10.30 AM', '1.00 PM', '4.30 PM', '7.30 PM', '10.00 PM'];
   const [theatres, setTheatre] = useState<Theatre[]>([]);
   const [movies, setMovies] = useState<Movie[]>([]);
   const [showData, setShowData] = useState<ShowData>({} as ShowData);
   const [shows, setShows] = useState<Shows[]>([]);
+  const [token, setToken] = useState<string | null>(null);
 
-   const token = sessionStorage.getItem('adminToken');
-  //Function for fetching shows
+  // Fetch token on component mount
+  useEffect(() => {
+    const storedToken = sessionStorage.getItem('adminToken');
+    setToken(storedToken);
+  }, []);
+
   const fetchShows = async () => {
     if (!token) {
       console.error("Token is null or undefined");
-      return; // Exit the function if the token is invalid
+      return;
     }
-  
+
     try {
-      const data = await getShows(token); // Call the service  for getting shows
+      const data = await getShows(token);
       setShows(data);
       console.log(data);
     } catch (error) {
       console.error("An error occurred while fetching shows", error);
     }
   };
-  
-  
 
-  //Function for getting theatres
   useEffect(() => {
+    const getTheatres = async () => {
+      try {
+        const res = await fetchTheatres();
+        setTheatre(res);
+      } catch (error) {
+        console.log(error);
+      }
+    };
 
-  try{
-    const getTheatres=async()=>
-    {
-
-    const res=await fetchTheatres()
-      setTheatre(res);
+    getTheatres();
+    if (token) {
+      fetchShows();
     }
-  getTheatres()
-    fetchShows();
-  }
-  catch(error)
-  {
-    console.log(error)
-  }
   }, [token]);
 
   const handleTheatreChange = (e: ChangeEvent<HTMLSelectElement>) => {
@@ -94,77 +94,63 @@ function ManageShows() {
       seats: selectedTheatre ? parseInt(selectedTheatre.seats) : 0,
     }));
 
-    //Function for getting a specific theatre and its movies
     const fetchTheatre = async (theatre_id: string) => {
       try {
-        if(token==null)
-          {
-            toast.error("Session Expired Login")
-          }
-          else
-          {
-        const data = await getTheatre(theatre_id, token); // Call the service function
-        const { movie1, movie2, movie3 } = data; // Destructure the movies
-        setMovies([movie1, movie2, movie3]); // Update state with the movies
-          }
+        if (!token) {
+          toast.error("Session Expired Login");
+          return;
+        }
+
+        const data = await getTheatre(theatre_id, token);
+        const { movie1, movie2, movie3 } = data;
+        setMovies([movie1, movie2, movie3]);
       } catch (error) {
         console.log("Error occurred while fetching theatre details", error);
       }
-    
     };
-    fetchTheatre(theatre_id)
-  }
+    fetchTheatre(theatre_id);
+  };
 
   const handleChange = (e: ChangeEvent<HTMLSelectElement | HTMLInputElement>) => {
     setShowData((prev) => ({ ...prev, [e.target.name]: e.target.value }));
   };
-//Functon for adding shows
-const handleSubmit: React.FormEventHandler<HTMLFormElement> = async (e) => {
-  e.preventDefault();
 
-  // Assuming token can be string or null
-  if (!token) {
-    toast.error("Token is not available");
-    return; // Exit if token is null
-  }
-
-  try {
-    const response = await addShow(showData, token); // Call the service function for adding show
-
-    if (response) {
-      toast.success(response.message);
-      fetchShows();
+  const handleSubmit: React.FormEventHandler<HTMLFormElement> = async (e) => {
+    e.preventDefault();
+    if (!token) {
+      toast.error("Token is not available");
+      return;
     }
-  } catch (error) {
-    toast.error("An error occurred while adding the show");
-    console.error("Error details:", error);
-  }
-};
 
+    try {
+      const response = await addShow(showData, token);
+      if (response) {
+        toast.success(response.message);
+        fetchShows();
+      }
+    } catch (error) {
+      toast.error("An error occurred while adding the show");
+      console.error("Error details:", error);
+    }
+  };
 
-  //Function for deleting a particular show
   const manageShow = async (id: string) => {
     try {
-      if(token==null)
-      {
-        toast.error("Session Expired Login")
+      if (!token) {
+        toast.error("Session Expired Login");
+        return;
       }
-      else
-      {
-      const message = await deleteShow(id, token); // Call the service function for deleting movies
-      toast.success(message); // Display success message
-      fetchShows(); // Refresh the shows
-      }
+      const message = await deleteShow(id, token);
+      toast.success(message);
+      fetchShows();
     } catch (error) {
       toast.error("Unexpected error occurred");
     }
   };
-  
-
 
   return (
     <div className="manage-shows">
-      <ToastContainer/>
+      <ToastContainer />
       <form onSubmit={handleSubmit} className="add-show-form">
         <h1>Add New Show</h1>
         <label>Select Theatre:</label>
@@ -188,8 +174,6 @@ const handleSubmit: React.FormEventHandler<HTMLFormElement> = async (e) => {
         <label>Select Timing:</label>
         <select name="timing" onChange={handleChange}>
           <option value="" disabled>Select a timing</option>
-
-          {/* mapping through the array of timings and selects a timing for show */}
           {timings.map((timing, index) => (
             <option key={index} value={timing}>{timing}</option>
           ))}
