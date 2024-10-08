@@ -35,6 +35,7 @@ const EditMovie: React.FC<EditMovieProps> = ({ movieId, movieState }) => {
     fetchMovie();
   }, [movieId]);
 
+  console.log(movieData)
   // Handling change of images
   const handleImageChange = (
     e: React.ChangeEvent<HTMLInputElement>,
@@ -135,13 +136,13 @@ const EditMovie: React.FC<EditMovieProps> = ({ movieId, movieState }) => {
           <input type="text" name="actor" defaultValue={movieData.cast.actor} placeholder={movieData.cast.actor} className={styles.input} />
           <label className={styles.label}>Actor Image:</label>
           <img src={actorPreview || fetchImages(movieData.actor_image)} alt="Actor" className={styles.imagePreview} />
-          <input type="file" onChange={(e) => handleImageChange(e, 'actor')} />
+          <input type="file" accept=".jpg,.jpeg,.png,.avif,.webp" onChange={(e) => handleImageChange(e, 'actor')} />
 
           <label className={styles.label}>Actress:</label>
           <input type="text" name="actress" defaultValue={movieData.cast.actress} placeholder={movieData.cast.actress} className={styles.input} />
           <label className={styles.label}>Actress Image:</label>
-          <img src={actressPreview || fetchImages(movieData.actress_image)} alt="Actress" className={styles.imagePreview} />
-          <input type="file" onChange={(e) => handleImageChange(e, 'actress')} />
+          <img src={actressPreview || fetchImages(movieData.actress_image)}  alt="Actress"  className={styles.imagePreview} />
+          <input type="file" accept=".jpg,.jpeg,.png,.avif,.webp" onChange={(e) => handleImageChange(e, 'actress')} />
 
           <label className={styles.label}>Director:</label>
           <input type="text" name="director" defaultValue={movieData.cast.director} placeholder={movieData.cast.director} className={styles.input} />
@@ -150,7 +151,7 @@ const EditMovie: React.FC<EditMovieProps> = ({ movieId, movieState }) => {
           <input type="text" name="production" defaultValue={movieData.cast.production} placeholder={movieData.cast.production} className={styles.input} />
           <label className={styles.label}>Poster Image:</label>
           <img src={posterPreview || fetchImages(movieData.poster)} alt="Poster" className={styles.imagePreview} />
-          <input type="file" onChange={(e) => handleImageChange(e, 'poster')} />
+          <input type="file" accept=".jpg,.jpeg,.png,.avif,.webp" onChange={(e) => handleImageChange(e, 'poster')} />
 
           <button type="submit" className={styles.button}>Save</button>
         </form>
