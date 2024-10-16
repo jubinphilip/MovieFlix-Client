@@ -26,6 +26,10 @@ function Signup() {
       toast.success('Registration successful!'); 
       router.push('/user/signin')
       }
+      else
+      {
+        setError(res.data.message)
+      }
 
     } catch (error) {
       if (axios.isAxiosError(error)) {
