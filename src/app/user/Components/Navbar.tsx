@@ -44,7 +44,7 @@ function Navbar() {
           <li><a href="/user/userhome">Home</a></li>
           <li><a href="/user/theatres">Theatres</a></li>
           <li><a href="/user/history">History</a></li>
-          {userid && <li><button className="logout-btn" onClick={handleLogout}>Logout</button></li>}
+          {userid ? <li><button className="logout-btn" onClick={handleLogout}>Logout</button></li>:   <li><a href="/user/signin">History</a></li>}
         </ul>
       </nav>
       {/* Navbar for Mobile device */}
