@@ -31,8 +31,6 @@ function Navbar() {
     router.push('/');
   };
 
-  const userProfile = useSelector((state: RootState) => state.user);
-
   const toggleMenu = () => {
     setIsMenuOpen(!isMenuOpen);
   };
