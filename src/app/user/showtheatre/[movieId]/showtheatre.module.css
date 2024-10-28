@@ -89,3 +89,11 @@
 .theatreItem button:hover {
   background-color: #0056b3;
 }
+@media (max-width: 650px) {
+.theatreItem
+  {
+   flex-direction:column;
+    justify-content:center;
+    align-items:center;
+}
+}
