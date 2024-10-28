@@ -6,7 +6,6 @@ import { clearUser } from '../Redux/Feautures/user/userslice';
 import { TiThMenu } from "react-icons/ti";
 import { RiCloseLargeFill } from "react-icons/ri";
 import { useRouter } from 'next/navigation';
-import { RootState } from '../Redux/store';
 import './styles/navbar.css';
 
 function Navbar() {
