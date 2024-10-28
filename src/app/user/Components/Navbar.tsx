@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import { RootState } from '../Redux/store'
 import { resetTicketDetails } from '../Redux/Feautures/user/ticketSlice';
 import { clearUser } from '../Redux/Feautures/user/userslice';
 import { TiThMenu } from "react-icons/ti";
@@ -12,6 +13,15 @@ function Navbar() {
   const router = useRouter();
   const dispatch = useDispatch();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+   const userProfile = useSelector((state: RootState) => state.user)
+  const[userid,setUserid]=useState('')
+  useEffect(()=>
+    {
+         const userid = userProfile.userid
+      setUserid(userid)
+    })
+   
+
 //when pressing logout redux session and localsorage needs to be cleared
   const handleLogout = () => {
     localStorage.clear();
@@ -37,7 +47,7 @@ function Navbar() {
           <li><a href="/user/userhome">Home</a></li>
           <li><a href="/user/theatres">Theatres</a></li>
           <li><a href="/user/history">History</a></li>
-          <li><button className="logout-btn" onClick={handleLogout}>Logout</button></li>
+          {userid && <li><button className="logout-btn" onClick={handleLogout}>Logout</button></li>}
         </ul>
       </nav>
       {/* Navbar for Mobile device */}
