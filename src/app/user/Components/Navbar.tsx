@@ -44,7 +44,7 @@ function Navbar() {
           <li><a href="/user/userhome">Home</a></li>
           <li><a href="/user/theatres">Theatres</a></li>
           <li><a href="/user/history">History</a></li>
-          {userid ? <li><button className="logout-btn" onClick={handleLogout}>Logout</button></li>:   <li><a href="/user/signin">History</a></li>}
+          {userid ? <li><button className="logout-btn" onClick={handleLogout}>Logout</button></li>:   <li><a href="/user/signin">Signin</a></li>}
         </ul>
       </nav>
       {/* Navbar for Mobile device */}
@@ -67,7 +67,8 @@ function Navbar() {
             <li><a href="/user/userhome" onClick={toggleMenu}>Home</a></li>
             <li><a href="/user/theatres" onClick={toggleMenu}>Theatres</a></li>
             <li><a href="/user/history" onClick={toggleMenu}>History</a></li>
-            <li><button className="logout-btn" onClick={() => { handleLogout(); toggleMenu(); }}>Logout</button></li>
+              {userid ? <li><button className="logout-btn" onClick={() => { handleLogout(); toggleMenu(); }}>Logout</button></li>: <li><a href="/user/signin">Signin</a></li>}
+           
           </ul>
         </div>
       </nav>
