@@ -254,7 +254,7 @@ function Layout() {
     <div className="layout-container">
       <ToastContainer/>
       {booking && <Success id={bookingId} show={true} />} {/* If booking success, show success component */}
-      <p>Ticket Price: {ticketInfo?.theatre_id.ticketprice}</p>
+       <p className='pricetag'>Ticket Price: {ticketInfo?.theatre_id.ticketprice}</p>
       
       <div className="seating-layout">
         {seatLayout.map((row, rowIndex) => (
