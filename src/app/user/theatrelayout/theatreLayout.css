@@ -6,7 +6,10 @@
     margin: auto;
     text-align: center;
   }
-  
+    .pricetag
+  {
+    margin-top: 100px;
+  }
   /* Seating Layout Styles */
   .seating-layout {
     display: flex;
